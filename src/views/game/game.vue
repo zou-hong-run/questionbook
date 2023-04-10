@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="game-content"> 
-        <div class="game-content-div" v-for="(item, index) in 10" :key="index">
+        <div class="game-content-div" v-for="(item, index) in 5" :key="index">
           <el-image style="width: 200px; height: 200px" :src="livestyle"/>
           <h1>拼图游戏</h1>
           <p>啊哈胡共和国i</p>
