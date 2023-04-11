@@ -33,7 +33,12 @@
   </div>
 </template>
 <script setup>
-
+import {ref} from "vue"
+import {myLike} from "../../../api/user"
+const myLikeList = ref()
+myLike().then(list=>{
+  console.log(list.data);
+})
 
 </script>
 <style scoped lang='scss'>

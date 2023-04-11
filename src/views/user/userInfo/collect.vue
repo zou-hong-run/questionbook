@@ -33,7 +33,12 @@
   </div>
 </template>
 <script setup>
-
+import {ref} from "vue"
+import {myCollect} from "../../../api/user"
+const myCollectList = ref()
+myCollect().then(list=>{
+  console.log(list.data);
+})
 
 </script>
 <style scoped lang='scss'>

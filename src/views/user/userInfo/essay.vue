@@ -33,6 +33,12 @@
   </div>
 </template>
 <script setup>
+import {ref} from "vue"
+import {myEssay} from "../../../api/user"
+const myEssayList = ref()
+myEssay().then(list=>{
+  console.log(list.data);
+})
 
 
 </script>

@@ -32,7 +32,12 @@
   </div>
 </template>
 <script setup>
-
+import {ref} from "vue"
+import {myQuestion} from "../../../api/user"
+const myQuestionList = ref()
+myQuestion().then(list=>{
+  console.log(list.data);
+})
 
 </script>
 <style scoped lang='scss'>

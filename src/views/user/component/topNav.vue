@@ -5,7 +5,7 @@
         <el-avatar :size="100" :src="circleUrl" />
       </div>
       <div class="topNav-left-content">
-        <h1 style="font-size:18px;margin-bottom:10px;">小草</h1>
+        <h1 style="font-size:18px;margin-bottom:10px;">{{username}}</h1>
         <p>123456789</p>
       </div>
     </div>
@@ -27,8 +27,12 @@
   
 </template>
 <script setup>
-  import {ref,reactive,computed} from "vue"
+  import {ref,reactive,computed,toRef} from "vue"
   import {useRoute,useRouter} from "vue-router"
+  import useUserStore from "../../../store/user";
+  const userStore = useUserStore()
+  // console.log(userStore);
+  let username = userStore.name
   const route = useRoute()
   const router = useRouter()
   const circleUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
@@ -47,7 +51,7 @@
         label:"我的点赞",name:"userinfo/like"
       }
   ])
-  const activeName = ref('quetions')
+  const activeName = ref(tableItems[0].name)
   const tabChange = (tab, event) => {
     /*
     tab-click	tab 被选中时触发	(pane: TabsPaneContext, ev: Event)
