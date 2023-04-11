@@ -61,7 +61,7 @@ export function addQuestionComment(msg,data,code){
   })
 }
 // 删除评论
-export function findQuestionByType(id){
+export function deleteComment(id){
   return request({
     url:`/question/${id}`,
     method:"delete",

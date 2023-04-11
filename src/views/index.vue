@@ -15,39 +15,25 @@
           </div>
           
           <div class="hot-question">
-            <router-link style="width:25%;height:100%;margin:30px;" v-for="(item, index) in 10" :key="index" :to="`/question/questionItem/${item}`">
+            <router-link style="width:25%;height:100%;margin:30px;" v-for="(item, index) in questionList" :key="item.id" :to="`/question/questionItem/${item.id}`">
               <el-card style="width:100%;height:100%;"  :body-style="{ padding: '0px' }">
                 <!-- <div style="width:100%;display:flex;flex-direction:column;align-items: center;"> -->
                 <div style="width:100%;height:100%;">
+                  <!-- class="hot-question-top-image" -->
                   <div class="hot-question-top">
                     <img
-                      src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                      :src="item.images"
                       class="hot-question-top-image"
                     />
                     <div class="hot-question-top-content">
                       <span class="hot-question-top-content-span">立即进入讨论</span>
-                      <div class="hot-question-top-content-text">
-                        需要设置元素宽度与高度,
-                        根据高度看下最多能放几行,再设置-webkit-line-clamp的值为最大行数元素宽度与高度,
-                        根据高度看下最多能放几行,再设置-webkit-line-cl元素宽度与高度,
-                        根据高度看下最多能放几行,再设置-webkit-line-cl元素宽度与高度,
-                        根据高度看下最多能放几行,再设置-webkit-line-cl元素宽度与高度,
-                        根据高度看下最多能放几行,再设置-webkit-line-cl
-                        我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                    我们不需要设置，内容溢出会自动出现
-                      </div>
+                      <div class="hot-question-top-content-text">{{item.title}}</div>
                     </div>
                   </div>
                   
                   <div class="hot-question-bottom">
-                    <el-tag>未解决</el-tag>
-                    <el-tag type="info">999+人在线讨论</el-tag>
+                    <el-tag>{{item.solved===0?"未解决":"已解决"}}</el-tag>
+                    <el-tag type="info">{{999}}+人在线讨论</el-tag>
                     <el-image style="width: 20px; height: 20px" :src="embers" />
                   </div>
                 </div>
@@ -66,11 +52,14 @@
             </el-divider>
           </div>
           <div class="hot-essay">
-            <router-link style="" v-for="(item, index) in 10" :key="index" :to="`/essay/essayItem/${item}`">
+            <router-link style="" v-for="(item, index) in essayList" :key="item.id" :to="`/essay/essayItem/${item.id}`">
               <el-row style="border:5px solid #F5F6F8;">
                 <!-- 文字描述 -->
-                <el-descriptions style="margin:20px;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
+                <!-- <el-descriptions style="margin:20px;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
                   <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
+                </el-descriptions> -->
+                <el-descriptions style="margin:20px;" :title="item.title">
+                  <el-descriptions-item :label="item.data"></el-descriptions-item>
                 </el-descriptions>
                 <!-- 三连 -->
                 <div class="hot-essay-likecollectandforward">
@@ -159,10 +148,26 @@
   </div>
 </template>
 <script setup>
-import {onMounted} from "vue"
+import {onMounted,ref,reactive,nextTick} from "vue"
 import discussionLogo from "../assets/indexIcons/没有问题.png"
 import embers from '../assets/indexIcons/fill_小火苗.png'
 import { ElNotification } from 'element-plus'
+
+
+import useQuestionStore from "../store/quesiton"
+import useEssayStore from "../store/essay"
+const questionStore = useQuestionStore()
+const essayStore = useEssayStore()
+
+const questionList = ref()
+const essayList = ref()
+questionStore.getQuestionList().then(list=>{
+  questionList.value = list
+});
+essayStore.getEssayList().then(list=>{
+  essayList.value = list
+});
+
 onMounted(()=>{
   // 消息提示框
   ElNotification({
@@ -170,6 +175,13 @@ onMounted(()=>{
     message: '欢迎来到问书欢迎来到问书'
   })
 })
+window.addEventListener('error',function(e){
+    //当前异常是由图片加载异常引起的
+    if( e.target.tagName?.toUpperCase() === 'IMG' ){
+        e.target.src = "https://pinia.web3doc.top/logo.svg";
+    }
+},true)
+
 
 </script>
 <style scoped lang='scss'>
@@ -236,6 +248,7 @@ onMounted(()=>{
                 left: 0%;
               }
               &-text{
+                width: 100%;
                 height: 55px;
                 position: absolute;
                 bottom: 0px;

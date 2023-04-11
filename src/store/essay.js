@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia'
-import {getQuestionList} from "../api/question"
+import {getEssayList} from "../api/essay"
 
-const useQuestionStore = defineStore("question",{
+const useEssayStore = defineStore("essay",{
   state:()=>({
     list:[],
   }),
@@ -9,10 +9,10 @@ const useQuestionStore = defineStore("question",{
     
   },
   actions:{
-    // 获取问题列表
-    async getQuestionList(){
+    // 获取文章列表列表
+    async getEssayList(){
       try {
-        let res = await getQuestionList()
+        let res = await getEssayList()
         this.list = res.data;
         return res.data
       } catch (error) {
@@ -22,4 +22,4 @@ const useQuestionStore = defineStore("question",{
   }
 })
 
-export default useQuestionStore
+export default useEssayStore
