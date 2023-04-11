@@ -6,9 +6,16 @@ const useUserStore = defineStore("user",{
   state:()=>({
     token:getToken(),
     name:"",
+    username:'',
     avatar:"",
+
     roles:[],
-    permissions:[]
+    permissions:[],
+    image:'',
+    createTime:'',
+    phone:'',
+    sex:0
+    
   }),
   getters:{
     
@@ -41,10 +48,17 @@ const useUserStore = defineStore("user",{
         if(res){
           // console.log(res);
           // 存储用户信息
+          const name = res.data.name
+          const avatar = res.data.avatar// 
+          const image = res.data.image
           const username = res.data.username
-          const avatar = res.avatar// 
-          this.name = username
+          this.name = name
           this.avatar = avatar
+          this.image = image
+          this.username = username
+          this.createTime = res.data.createTime
+          this.phone = res.data.phone
+          this.sex = res.data.sex
         }
       } catch (error) {
         return new Error(error)

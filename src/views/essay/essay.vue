@@ -67,6 +67,7 @@ if(essayStore.list.length===0){
 essayList.value = essayStore.list
 function getAllEssays(){
   essayStore.getEssayList().then(list=>{
+    console.log(list);
     essayList.value = list
   })
 }

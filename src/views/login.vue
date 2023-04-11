@@ -202,8 +202,8 @@ let registerLoading = ref(false)
 
 // 登录数据
 let loginFormItem = reactive({
-  username:"zouhongrun",
-  password:"zouhongrun",
+  username:"admin",
+  password:"admin",
   code:""
 })
 // 注册数据

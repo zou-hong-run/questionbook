@@ -41,10 +41,13 @@ export function addQuestion(){
   })
 }
 // 更改问题
-export function updateQuestion(){
+export function updateQuestion(id,title,data,images,types=[]){
   return request({
     url:"/question",
     method:"put",
+    data:{
+      id,title,data,images,types
+    }
   })
 }
 // 根据类型查找问题

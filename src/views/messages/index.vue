@@ -2,8 +2,8 @@
   <div class="messages">
     <div class="messages-left">
       <el-avatar :size="80" :src="circleUrl" />
-      <h1>{{username}}</h1>
-      <p>123456798</p>
+      <h1>{{name}}</h1>
+      <p>{{phone}}</p>
       <el-link type="success" href="#/userinfo/questions">个人主页</el-link>
     </div>
     <div class="messages-right">
@@ -26,15 +26,13 @@
 
         <el-tab-pane label="点赞">
           <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in likeMeList" :key="item.id">
-              <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
+            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in likeMeList" :key="item.id">
+              <el-avatar style="margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
               <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
-                <el-descriptions-item label="时间:">2023年4月5日19:17:10</el-descriptions-item>
-                <el-descriptions-item label="文章标题:">干红干好噶化工爱过哈 嘎嘎</el-descriptions-item>
-                <el-descriptions-item label="评论了:">
-                  你小子找茬啊
-                </el-descriptions-item>
+                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
+                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
+                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
               </el-descriptions>
             </el-link>
           </el-scrollbar>
@@ -42,15 +40,13 @@
 
         <el-tab-pane label="收藏">
           <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in collectMeList" :key="index">
-              <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
+            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in collectMeList" :key="item.id">
+              <el-avatar style="margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
               <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
-                <el-descriptions-item label="时间:">2023年4月5日19:17:10</el-descriptions-item>
-                <el-descriptions-item label="文章标题:">干红干好噶化工爱过哈 嘎嘎</el-descriptions-item>
-                <el-descriptions-item label="评论了:">
-                  你小子找茬啊
-                </el-descriptions-item>
+                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
+                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
+                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
               </el-descriptions>
             </el-link>
           </el-scrollbar>
@@ -58,15 +54,13 @@
 
         <el-tab-pane label="评论">
           <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in collectMeList" :key="index">
-              <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
+            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in commentMeList" :key="item.id">
+              <el-avatar style="margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
               <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
-                <el-descriptions-item label="时间:">2023年4月5日19:17:10</el-descriptions-item>
-                <el-descriptions-item label="文章标题:">干红干好噶化工爱过哈 嘎嘎</el-descriptions-item>
-                <el-descriptions-item label="评论了:">
-                  你小子找茬啊
-                </el-descriptions-item>
+                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
+                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
+                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
               </el-descriptions>
             </el-link>
           </el-scrollbar>
@@ -83,15 +77,20 @@ import {likeMe,collectMe,commentMe} from "../../api/message"
 
 import useUserStore from '../../store/user';
 const userStore = useUserStore()
-const username = userStore.name
+const name = userStore.name
+const image = userStore.image
+const phone = userStore.phone
 const circleUrl = ref("https://img1.baidu.com/it/u=2101536329,949644418&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=625")
 
 const likeMeList = ref()
 const collectMeList = ref()
 const commentMeList = ref()
+likeMe().then(list=>{
+  likeMeList.value = list.data
 
+})
 function tableClick(data){
-  let label =  data.props.label
+  let label = data.props.label
   const tabChoose = {
     "收藏":()=>{
       collectMe().then(list=>{
@@ -100,6 +99,7 @@ function tableClick(data){
     },
     "评论":()=>{
       commentMe().then(list=>{
+        console.log(list.data);
         commentMeList.value = list.data
       })
     },

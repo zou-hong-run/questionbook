@@ -50,9 +50,8 @@ export function updateEssay(id,title,dat,images,types){
 // 根据类型查找文章
 export function getEssayListByType(id){
   return request({
-    url:"/text/byType",
+    url:`/text/byType/${id}`,
     method:"get",
-    params:{id}
   })
 }
 // 添加评论
