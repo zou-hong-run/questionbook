@@ -357,6 +357,7 @@ function handleLogin(){
   })
 }
 function getCode(){
+  loginLoading.value = false
   getCodeImg().then(res=>{
     captchaOnOff.value = res.data === undefined?true:res.data;
     if(captchaOnOff.value){
