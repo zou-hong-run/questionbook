@@ -9,9 +9,8 @@ export function getQuestionList(){
 // 获取单个问题
 export function getQuestionById(id){
   return request({
-    url:"/question",
+    url:`/question/${id}`,
     method:"get",
-    params:{id},
   })
 }
 // 获取问题分类
@@ -45,9 +44,8 @@ export function updateQuestion(){
 // 根据类型查找问题
 export function findQuestionByType(id){
   return request({
-    url:"/question/byType",
+    url:`/question/byType/${id}`,
     method:"get",
-    params:{id}
   })
 }
 // 添加评论
@@ -65,8 +63,7 @@ export function addQuestionComment(msg,data,code){
 // 删除评论
 export function findQuestionByType(id){
   return request({
-    url:"/question",
+    url:`/question/${id}`,
     method:"delete",
-    params:{id}
   })
 }
