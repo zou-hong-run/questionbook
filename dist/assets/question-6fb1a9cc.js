@@ -1,0 +1,1 @@
+import{B as t}from"./index-8a7cc118.js";function u(){return t({url:"/question/list",method:"get"})}function o(e){return t({url:`/question/${e}`,method:"get"})}function i(){return t({url:"/question/type",method:"get"})}function s(e){return t({url:`/question/byType/${e}`,method:"get"})}export{s as a,u as b,o as c,i as g};
