@@ -154,7 +154,7 @@ import embers from '../assets/indexIcons/fill_小火苗.png'
 import { ElNotification } from 'element-plus'
 
 
-import useQuestionStore from "../store/quesiton"
+import useQuestionStore from "../store/question"
 import useEssayStore from "../store/essay"
 const questionStore = useQuestionStore()
 const essayStore = useEssayStore()
