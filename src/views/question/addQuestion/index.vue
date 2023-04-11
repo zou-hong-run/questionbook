@@ -1,7 +1,7 @@
 <template>
   <div class="addQuestion">
     <div class="addQuestion-title">
-      <el-divider content-position="center"><el-text type="info" size="large">发布文章</el-text></el-divider>
+      <el-divider content-position="center"><el-text type="info" size="large">发布问题</el-text></el-divider>
     </div>
     <div class="addQuestion-content">
       <el-scrollbar style="height:calc(100%);z-index:100;" ref="scrollbarRef" always @scroll="scroll">
@@ -361,4 +361,6 @@ function setButtonVal(btnVal){
   console.log(btnVal);
   buttonVal.value = btnVal;
 }
+
+
 </script>
