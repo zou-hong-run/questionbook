@@ -53,11 +53,13 @@ const useUserStore = defineStore("user",{
     // 退出系统
     async LogOut(){
       try {
-        let res = await logout()
-        if(res){
-          this.token = ""
-          removeToken()
-        }
+        // let res = await logout()
+        // if(res){
+        //   this.token = ""
+        //   removeToken()
+        // }
+        this.token = ""
+        removeToken()
       } catch (error) {
         return new Error(error)
       }

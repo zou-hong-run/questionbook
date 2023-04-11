@@ -2,12 +2,12 @@
   <div class="messages">
     <div class="messages-left">
       <el-avatar :size="80" :src="circleUrl" />
-      <h1>小草</h1>
+      <h1>{{username}}</h1>
       <p>123456798</p>
-      <el-link type="success">个人主页</el-link>
+      <el-link type="success" href="#/userinfo/questions">个人主页</el-link>
     </div>
     <div class="messages-right">
-      <el-tabs type="border-card">
+      <el-tabs type="border-card"  @tab-click="tableClick" >
         <!-- <el-tab-pane label="全部">
           <el-scrollbar height="70vh">
             <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in 20" :key="index">
@@ -26,7 +26,7 @@
 
         <el-tab-pane label="点赞">
           <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in 20" :key="index">
+            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in likeMeList" :key="item.id">
               <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
               <el-descriptions :column="1">
                 <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
@@ -42,7 +42,7 @@
 
         <el-tab-pane label="收藏">
           <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in 20" :key="index">
+            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in collectMeList" :key="index">
               <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
               <el-descriptions :column="1">
                 <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
@@ -58,7 +58,7 @@
 
         <el-tab-pane label="评论">
           <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in 20" :key="index">
+            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in collectMeList" :key="index">
               <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
               <el-descriptions :column="1">
                 <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
@@ -78,7 +78,40 @@
 
 <script setup>
 import {ref} from 'vue';
+// import { storeToRefs } from 'pinia'
+import {likeMe,collectMe,commentMe} from "../../api/message"
+
+import useUserStore from '../../store/user';
+const userStore = useUserStore()
+const username = userStore.name
 const circleUrl = ref("https://img1.baidu.com/it/u=2101536329,949644418&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=625")
+
+const likeMeList = ref()
+const collectMeList = ref()
+const commentMeList = ref()
+
+function tableClick(data){
+  let label =  data.props.label
+  const tabChoose = {
+    "收藏":()=>{
+      collectMe().then(list=>{
+        collectMeList.value = list.data
+      })
+    },
+    "评论":()=>{
+      commentMe().then(list=>{
+        commentMeList.value = list.data
+      })
+    },
+    "点赞":()=>{
+      likeMe().then(list=>{
+        likeMeList.value = list.data
+      })
+    }
+  }
+  tabChoose[label]()
+}
+
 </script>
 <style scoped lang='scss'>
 .messages{
