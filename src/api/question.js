@@ -1,5 +1,8 @@
 import request from "../utils/request"
-// 获取问题列表
+/**
+ * 获取问题列表
+ * @returns 
+ */
 export function getQuestionList(){
   return request({
     url:"/question/list",
@@ -13,7 +16,10 @@ export function getQuestionById(id){
     method:"get",
   })
 }
-// 获取问题分类
+/**
+ * 获取问题分类
+ * @returns 
+ */
 export function getQuestionType(){
   return request({
     url:"/question/type",
@@ -42,7 +48,7 @@ export function updateQuestion(){
   })
 }
 // 根据类型查找问题
-export function findQuestionByType(id){
+export function getQuestionListByType(id){
   return request({
     url:`/question/byType/${id}`,
     method:"get",

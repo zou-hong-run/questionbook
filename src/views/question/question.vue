@@ -2,29 +2,32 @@
   <div class="question">
     <div class="question-header">
       <el-row class="question-header-row">
-        <el-button   round v-for="(item, index) in 10" :key="index" type="primary">Plain</el-button>
+        <el-button @click="getAllQuestions" type="primary">所有</el-button>
+        <el-button @click="clickGetList(item.id)"  round v-for="(item, index) in questionTypes" :key="index" type="primary">{{item.type}}</el-button>
       </el-row>
     </div>
     <div class="question-content">
       <el-scrollbar>
         <div class="hot-question">
-          <el-card style="width:30%;margin:10px 0 10px;" v-for="(item,index) in questionList" :body-style="{position:'relative',top:'0px', padding: '10px' }">
-            <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-              class="hot-question-image"
-            />
-            <div class="hot-question-content">
-              <span class="hot-question-content-inImgText">立即进入讨论</span>
-              <div class="hot-question-content-bottom">
-                <div class="hot-question-content-bottom-title">{{item.title}}</div>
-                <div class="hot-question-content-bottom-discuss">
-                  <el-tag>{{item.solved===0?"未解决":"已解决"}}</el-tag>
-                  <div style="margin:0 20px;"><el-tag type="info">{{999}}+人在线讨论</el-tag></div>
-                  <el-image style="width: 20px; height: 20px" :src="embers" />
+          <router-link v-for="(item, index) in questionList" :key="item.id" :to="`/question/questionItem/${item.id}`">
+            <el-card style="width:100%;margin:10px 0 10px;" :body-style="{position:'relative',top:'0px', padding: '10px' }">
+              <img
+                :src="item.images"
+                class="hot-question-top-image"
+              />
+              <div class="hot-question-content">
+                <span class="hot-question-content-inImgText">立即进入讨论</span>
+                <div class="hot-question-content-bottom">
+                  <div class="hot-question-content-bottom-title">{{item.title}}</div>
+                  <div class="hot-question-content-bottom-discuss">
+                    <el-tag>{{item.solved===0?"未解决":"已解决"}}</el-tag>
+                    <div style="margin:0 20px;"><el-tag type="info">{{999}}+人在线讨论</el-tag></div>
+                    <el-image style="width: 20px; height: 20px" :src="embers" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </el-card>
+            </el-card>
+          </router-link>
         </div>
       </el-scrollbar>
     </div>
@@ -34,13 +37,35 @@
 <script setup>
 import {ref,reactive} from "vue"
 import embers from "@/assets/indexIcons/fill_小火苗.png";
+import {getQuestionType,getQuestionListByType} from "../../api/question"
+
 import useQuestionStore from "../../store/question";
 const questionStore = useQuestionStore()
 const questionList = ref()
+// 如果store中没有列表,就重新发送请求
+if(questionStore.list.length===0){
+  getAllQuestions()
+}
 questionList.value = questionStore.list
+// 问题类型
+let questionTypes = ref()
+getQuestionType().then(list=>{
+  questionTypes.value = list.data
+})
+// 按钮点击 查询新数据
+function clickGetList(id){
+  getQuestionListByType(id).then(data=>{
+    questionList.value = data.data
+  })
+}
+// 获取所有问题列表
+function getAllQuestions(){
+  questionStore.getQuestionList().then(list=>{
+    questionList.value = list
+  })
+}
 
-
-
+// 图片加载异常处理
 window.addEventListener('error',function(e){
     //当前异常是由图片加载异常引起的
     if( e.target.tagName?.toUpperCase() === 'IMG' ){
