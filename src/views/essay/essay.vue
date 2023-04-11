@@ -7,11 +7,11 @@
       </div>
       <div class="essay-left-content">
         <el-button
-          v-for="(item, index) in 10" :key="index" 
-          @click="clickBtn(index)"  
+          v-for="(item, index) in essayTypes" :key="index" 
+          @click="clickBtn(index,item.id)"  
           :class='[index==chooseBtn?"essay-left-content-button-chooseBg":"essay-left-content-button"]' 
         >
-          Plain
+          {{item.type}}
       </el-button>
       </div>
     </div>
@@ -21,28 +21,29 @@
         <!-- 热门文章 -->
         <div class="hot">
           <div class="hot-essay">
-            <el-row style="margin-bottom:10px;" v-for="(item, index) in 14" :key="index">
-              <el-col class="hot-essay-reply" :span="2">
-                <div style="font-weight:bold;">{{item}}</div>
-                <!-- <div>回答</div> -->
-              </el-col>
-              <el-col :span="22">
-                <!-- 文字描述 -->
-                <el-descriptions style="margin:20px;user-select:all;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
-                  <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
-                </el-descriptions>
-                <!-- 三连 -->
-                <div class="hot-essay-likecollectandforward">
-                  <el-button text type="default" icon="ChatSquare">评论</el-button>
-                  <el-button text type="default" icon="Pointer">点赞</el-button>
-                  <el-button text type="default" icon="Star">收藏</el-button>
-                  <el-button text type="default" icon="Share">转发</el-button>
-                </div>
-              </el-col>
-              
-              <!-- 分割线 -->
-              <el-divider></el-divider>
-            </el-row>
+            <router-link v-for="(item, index) in essayList" :key="item.id" :to="`/essay/essayItem/${item.id}`">
+              <el-row>
+                <el-col  class="hot-essay-reply" :span="2">
+                  <div style="font-weight:bold;">{{index+1}}</div>
+                  <!-- <div>回答</div> -->
+                </el-col>
+                <el-col :span="22"  >
+                  <!-- 文字描述 -->
+                  <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
+                    <el-descriptions-item :label="item.data"></el-descriptions-item>
+                  </el-descriptions>
+                  <!-- 三连 -->
+                  <div class="hot-essay-likecollectandforward">
+                    <el-button text type="default" icon="ChatSquare">评论</el-button>
+                    <el-button text type="default" icon="Pointer">点赞</el-button>
+                    <el-button text type="default" icon="Star">收藏</el-button>
+                    <el-button text type="default" icon="Share">转发</el-button>
+                  </div>
+                </el-col>
+                <!-- 分割线 -->
+                <el-divider></el-divider>
+              </el-row>
+            </router-link>
           </div>
         </div>
       </el-scrollbar>
@@ -53,10 +54,41 @@
 
 <script setup>
 import {ref} from 'vue'
-let chooseBtn = ref(0)
-const clickBtn = function(index){
-  chooseBtn.value = index;
+// 获取文章列表,获取文章分类,根据类型查找文章
+import {getEssayType,getEssayListByType} from "../../api/essay"
+import useEssayStore from '../../store/essay';
+const essayStore = useEssayStore()
+
+// 所有文章列表
+const essayList = ref()
+if(essayStore.list.length===0){
+  getAllEssays()
 }
+essayList.value = essayStore.list
+function getAllEssays(){
+  essayStore.getEssayList().then(list=>{
+    essayList.value = list
+  })
+}
+// 所有文章分类
+const essayTypes = ref()
+getEssayType().then(list=>{
+  essayTypes.value = list.data
+})
+// 根据分类获取文章
+function EssayListByType(id){
+  getEssayListByType(id).then(list=>{
+    essayList.value = list.data
+  })
+}
+// 保存按钮当前索引
+let chooseBtn = ref(0)
+// 点击分类按钮,
+const clickBtn = function(index,id){
+  chooseBtn.value = index;
+  EssayListByType(id)
+}
+
 </script>
 <style scoped lang='scss'>
 @import "@/assets/styles/common.scss";
