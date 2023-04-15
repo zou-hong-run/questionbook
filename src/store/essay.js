@@ -1,9 +1,10 @@
 import {defineStore} from 'pinia'
-import {getEssayList} from "../api/essay"
+import {getEssayList,getEssayType} from "../api/essay"
 
 const useEssayStore = defineStore("essay",{
   state:()=>({
     list:[],
+    category:[]
   }),
   getters:{
     
@@ -18,7 +19,18 @@ const useEssayStore = defineStore("essay",{
       } catch (error) {
         return new Error(error)
       }
-    }
+    },
+    // 获取文章分类列表
+    async getEssayType(){
+      try {
+        let res = await getEssayType()
+        this.category = res.data;
+        return res.data
+      } catch (error) {
+        return new Error(error)
+      }
+    },
+
   }
 })
 

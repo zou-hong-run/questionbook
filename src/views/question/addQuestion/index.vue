@@ -198,8 +198,8 @@ const editorConfig = {
 
       // 自定义上传参数，例如传递验证的 token 等。参数会被添加到 formData 中，一起上传到服务端。
       meta: {
-          token: 'xxx',
-          otherKey: 'yyy'
+          // token: 'xxx',
+          // otherKey: 'yyy'
       },
 
       // 将 meta 拼接到 url 参数中，默认 false
@@ -208,7 +208,7 @@ const editorConfig = {
       // 自定义增加 http  header
       headers: {
           Accept: 'text/x-json',
-          otherKey: 'xxx'
+          // otherKey: 'xxx'
       },
 
       // 跨域是否传递 cookie ，默认为 false
@@ -216,7 +216,8 @@ const editorConfig = {
 
       // 超时时间，默认为 10 秒
       timeout: 5 * 1000, // 5 秒
-      base64LimitSize: 5 * 1024 * 1024, // 5kb  5mb
+      // 小于该值就插入 base64 格式（而不上传），默认为 0
+      base64LimitSize: 5 * 1024, // 5kb
       // 上传回调函数====================================
       // 上传之前触发
       onBeforeUpload(file) {    // JS 语法

@@ -1,0 +1,169 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	outline: none;
+	font-family: "Arial",sans-serif;
+	color: #282828;
+	text-decoration: none;
+	list-style-type: none;
+}
+body{
+	background: #009BBC;
+	width: 100%;
+	height: 100%;
+}
+.group{
+	margin-bottom: 10px;
+}
+.group input,
+.group select{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+}
+.group label{
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 13px;
+}
+.group *{
+	display: block;
+}
+.box,
+.container{
+	width: 1140px;
+	margin: auto;
+}
+
+.box{
+	margin-top: 100px;
+	background: white;
+	border-radius: 4px;
+	padding: 30px
+}
+button{
+	width: 100%;
+	height: 60px;
+}
+#start,
+#end{
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: rgba(0,0,0,0.9);
+	z-index: 999999;
+}
+#end{
+	text-align: center;
+}
+.hide{
+	display: none !important;
+}
+/* 设置上传图片样式 */
+#start #pic{
+	float: left;
+	width: 100px;
+	height: 100px;
+	opacity: 0;
+	position: absolute;
+}
+#start img{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+}
+#gameContainer .container{
+	padding-top: 70px;
+	display: block;
+	position: relative;
+}
+#preview{
+	position: absolute;
+	display: block;
+	width: 165px;
+	height: 165px;
+	bottom: 394px;
+  	right: -190px;
+	background: white;
+}
+#drop .preview{
+	float: left;
+	margin-right: 10px;
+	height: 100px;
+  	width: 100px;
+	background: rgba(0,0,0,0.2);
+}
+#drop{
+	display: block;
+	width: 100%;
+	height: 100px;
+	line-height: 100px;
+	text-align: center;
+	border: dotted 1px rgba(0,0,0,0.2);
+}
+p{
+	text-align: center;
+}
+h3{
+	text-align: center;
+}
+table th,
+table td{
+	padding: 10px;
+	border: solid 1px rgba(0,0,0,0.2);
+}
+table{
+	width: 100%;
+	border-collapse: collapse;
+}
+#playername,
+#timer{
+	display: block;
+	text-align: center;
+}
+
+#playername{
+	background: white;
+	height: 40px;
+	line-height: 40px;
+	font-size: 22px;
+	font-weight: bold;
+}
+#timer span{
+	color: white;
+}
+#timer{
+	background: rgba(0,0,0,0.5);
+	font-size: 18px;
+	height: 40px;
+	line-height: 40px;
+	color: white;
+}
+h2{
+	text-align: center;
+}
+/* #puzzleContainer{
+	position: relative;
+} */
+#puzzle{
+	width: 300px;
+	height: 300px;
+	float: left;
+	position: relative;
+	background-color: red;
+}
+#pizzleM{
+	float: left;
+	width: 540px;
+	height: 300px;
+	background-color: green;
+}
+#puzzleDestination{
+	width: 300px;
+	height: 300px;
+	float: left;
+	position: relative;
+	background-color: yellow;
+}

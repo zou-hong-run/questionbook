@@ -45,7 +45,7 @@
         align-center
       >
         <div class="dialogbutton">
-          <el-button v-model="buttonVal" @click="setButtonVal(item)" v-for="(item, index) in 20" :key="index" size="small">{{item}}</el-button>
+          <el-button v-model="buttonVal" @click="setButtonVal(item)" v-for="(item, index) in essayTypes" :key="index" size="small">{{item.type}}</el-button>
         </div>
         <template #footer>
           <span class="dialog-footer">
@@ -93,7 +93,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      height: 200px;
+      height: 100px;
       width: 100%;
       justify-content: start;
       align-content: space-around;
@@ -111,6 +111,17 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { Boot } from '@wangeditor/editor'
 import markdownModule from '@wangeditor/plugin-md'
 import { ElScrollbar } from 'element-plus'
+import useEssayStore from '../../../store/essay'
+
+let essayStore = useEssayStore()
+// 获取文章分类
+let essayTypes = essayStore.category
+if(essayTypes.length===0){
+  essayStore.getEssayType().then(list=>{
+    essayTypes = list.data
+  })
+}
+
 
 // 滚动条 =======================
   const max = ref(0)
@@ -161,6 +172,7 @@ const editorConfig = {
 
   // 图片上传功能 =========================================
   MENU_CONF:{
+    
     insertImage:{
       onInsertedImage(imageNode) {                    // JS 语法
           if (imageNode == null) return
@@ -184,7 +196,9 @@ const editorConfig = {
       // parseImageSrc: customParseImageSrc, // 也支持 async 函数
     },
     uploadImage:{
-      server: '/www.baidu.com',// 上传服务器地址
+      // 小于该值就插入 base64 格式（而不上传），默认为 0
+      base64LimitSize: 5 * 1024, // 5kb
+      server: 'images/uploadCos',// 上传服务器地址
         // form-data fieldName ，默认值 'wangeditor-uploaded-image'
       fieldName: 'image',
 
@@ -217,7 +231,6 @@ const editorConfig = {
 
       // 超时时间，默认为 10 秒
       timeout: 5 * 1000, // 5 秒
-      base64LimitSize: 5 * 1024 * 1024, // 5kb  5mb
       // 上传回调函数====================================
       // 上传之前触发
       onBeforeUpload(file) {    // JS 语法
@@ -356,6 +369,9 @@ function clickSumbitEssay(){
     return
   }
   centerDialogVisible.value = false;
+  // 拿到标签分类
+  // 拿到文章内容
+  // 发送
 }
 // 设置文章类别
 function setButtonVal(btnVal){

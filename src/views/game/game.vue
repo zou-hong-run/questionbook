@@ -8,19 +8,54 @@
         </div>
       </div>
       <div class="game-content"> 
-        <div class="game-content-div" v-for="(item, index) in 5" :key="index">
-          <el-image style="width: 200px; height: 200px" :src="livestyle"/>
-          <h1>拼图游戏</h1>
-          <p>啊哈胡共和国i</p>
-        </div>
+        <el-link v-for="(item, index) in gameList" :key="index" target="_blank" :href="item.href" >
+          <div class="game-content-div">
+            <el-image style="width: 200px; height: 200px" :src="item.image"/>
+            <h1>{{item.name}}</h1>
+            <p>{{item.content}}</p>
+          </div>
+        </el-link>
       </div>
     </el-scrollbar>
   </div>
 </template>
 
 <script setup>
+import {onMounted,onUnmounted} from "vue"
 import livestyle from "@/assets/game/livestyle.png"
+import mota from "@/assets/game/mota.png"
+import pintu from "@/assets/game/pintu.png"
+import tiaoyitiao from "@/assets/game/跳一跳.png"
+import bgm from "@/assets/game/bg.mp3"
+let mp3 = new Audio(bgm)
+onMounted(()=>{
+  mp3.play()
+})
+onUnmounted(() => {
+  mp3.pause()
+})
 
+let gameList = [
+  {
+    name:"魔塔",
+    content:"自制经典魔塔小游戏",
+    href:"/mota/index.html",
+    image:mota
+  },
+  {
+    name:"拖拖拼图",
+    content:"无与伦比的拖拽拼图,难度超乎你的想象",
+    href:"/pintu/index.html",
+    image:pintu
+  },
+  {
+    name:"跳一跳",
+    content:"魔幻走位,考验你的大脑",
+    href:"/跳一跳.html",
+    image:tiaoyitiao
+  }
+  
+]
 </script>
 <style scoped lang='scss'>
 @import "@/assets/styles/common.scss";

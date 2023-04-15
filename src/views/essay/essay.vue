@@ -30,7 +30,7 @@
                 <el-col :span="22"  >
                   <!-- 文字描述 -->
                   <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
-                    <el-descriptions-item :label="item.data"></el-descriptions-item>
+                    <el-descriptions-item label-class-name="hot-essay-descriptions" :label="item.data.slice(0,120)+'...'"></el-descriptions-item>
                   </el-descriptions>
                   <!-- 三连 -->
                   <div class="hot-essay-likecollectandforward">
@@ -73,9 +73,13 @@ function getAllEssays(){
 }
 // 所有文章分类
 const essayTypes = ref()
-getEssayType().then(list=>{
-  essayTypes.value = list.data
-})
+if(essayStore.category.length===0){
+  essayStore.getEssayType().then(list=>{
+    essayTypes.value = list.data
+  })
+}
+essayTypes.value = essayStore.category
+
 // 根据分类获取文章
 function EssayListByType(id){
   getEssayListByType(id).then(list=>{

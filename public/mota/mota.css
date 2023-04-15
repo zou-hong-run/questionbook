@@ -1,0 +1,46 @@
+.gamebox{
+	width: 550px;height: 550px;
+	background-color: darkorange;
+	position: absolute;
+    top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
+}
+.bigbox{
+		width: 730px;height:700px;
+	background-image:url(imgs/1.png);
+	position: relative;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
+}
+.jieshao{
+	width: 90px;height:30px;
+	
+}
+.gagade{
+	width: 500px;height:90px;
+	position: relative;
+	font-size:50px;
+	color:yellow;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
+}
+.die{
+		width: 500px;height:90px;
+	position: relative;
+	font-size:50px;
+	color:yellow;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
+}

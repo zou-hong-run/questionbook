@@ -12,7 +12,7 @@
           <router-link v-for="(item, index) in questionList" :key="item.id" :to="`/question/questionItem/${item.id}`">
             <el-card style="width:100%;margin:10px 0 10px;" :body-style="{position:'relative',top:'0px', padding: '10px' }">
               <img
-                :src="item.images"
+                :src="item.images?item.images:'https://pinia.web3doc.top/logo.svg'"
                 class="hot-question-top-image"
               />
               <div class="hot-question-content">

@@ -33,12 +33,6 @@ const routes = [
         meta: { title: '首页', icon: 'dashboard', affix: true }
       },
       {
-        path: '/game',
-        component: () => import('@/views/game/game'),
-        name: 'Game',
-        meta: { title: '游戏', icon: 'dashboard', affix: true }
-      },
-      {
         path: '/usersettings',
         component: () => import('../views/user/userSettings'),
         name: 'UserSeetings',
@@ -151,6 +145,20 @@ const routes = [
         component: () => import('@/views/essay/essayItem/index'),
         name: 'EssayItem',
         meta: { title: '文章详情', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  // 游戏
+  {
+    path: '/game',
+    component: Layout,
+    meta: { title: '游戏', icon: 'dashboard', affix: true },
+    children:[
+      {
+        path: '',
+        component: () => import('@/views/game/game'),
+        name: 'Game',
+        meta: { title: '游戏', icon: 'dashboard', affix: true }
       }
     ]
   },

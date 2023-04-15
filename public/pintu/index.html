@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<title>拼图</title>
+</head>
+<body>
+	<!-- START -->
+	<div id="start">
+		<div class="box">
+			<h2>欢迎玩家</h2>
+			<p>请创建的你的游戏信息</p>
+			<div>
+				<div class="group">
+					<label for="name">姓名</label>
+					<input type="text" value="张三" name="name" id="name" />
+				</div>
+				<div class="group">
+					<label for="difficult">难度</label>
+					<select type="text" name="difficult" id="difficult" >
+						<option value="3">简单</option>
+						<option value="5">一般</option>
+						<option value="7">困难</option>
+						<option value="9">地狱</option>
+						<option value="11">天堂</option>
+						<option value="15">不要尝试的难度</option>
+					</select>
+				</div>
+				<!-- DROP -->
+				<div class="group" id="drop">
+					<div class="preview">
+						<img src="" alt="">
+						<input type="file" name="pic" id="pic" accept="image/gif, image/jpeg ,image/png" />
+					</div>
+					<p>放入你自己的图片</p>
+				</div><!-- END DROP -->
+				<div class="group">
+					<button name="submit">开始(请先上传图片)</button>
+				</div>
+			</div>
+		</div>
+	</div><!-- END START -->
+
+	<!-- END -->
+	<div id="end">
+		<div class="box" id="box">
+			<h3>拼图完成</h3>
+			<p>游戏胜利！</p>
+			<table>
+				<thead>
+					<tr>
+						<th>排名</th>
+						<th>难度</th>
+						<th>用户名</th>
+						<th>游戏时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>天堂</td>
+						<td>作者本人哈哈哈</td>
+						<td>1:11</td>
+					</tr>
+				</tbody>
+			</table>
+			<button class="btn btn-restart" onclick="end.remove(); return false;">开始游戏</button>
+		</div>
+	</div><!-- END END -->
+
+	<!-- 游戏界面 -->
+	<div id="gameContainer">
+
+		<div class="container">
+
+			<!-- PLAYERNAME -->
+			<span id="playername">用户名</span>
+
+			<!-- TIMER -->
+			<div id="timer">
+				<span>0:00</span>
+			</div>
+
+			<div id="puzzleContainer">
+				<!-- PUZZLE -->
+				<div id="puzzle">
+				</div>
+				<div id="pizzleM"></div>
+				<div id="puzzleDestination">
+				</div>
+			</div>
+
+			<div class="buttons">
+				<button class="btn btn-pause">暂停</button>
+				<button class="btn btn-restart" onclick="location.reload()">重新游戏</button>
+			</div>
+		</div>
+	</div>
+	<script src="./js/index.js"></script>
+</body>
+</html>

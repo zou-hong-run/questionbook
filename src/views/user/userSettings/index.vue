@@ -25,7 +25,7 @@
                   昵称:
                 </div>
               </template>
-              <el-input  placeholder="小草" />
+              <el-input  placeholder="小草" :value="name?name:'小草'" />
             </el-collapse-item>
             <el-collapse-item name="2">
               <template #title>
@@ -33,7 +33,7 @@
                   账号:
                 </div>
               </template>
-              <el-input width="50%" placeholder="231461564146" />
+              <el-input width="50%" placeholder="231461564146" :value="username?username:'无'" />
             </el-collapse-item>
             <el-collapse-item name="3">
               <template #title>
@@ -41,7 +41,7 @@
                   修改密码:
                 </div>
               </template>
-              <el-input type="password" placeholder="1234566789" />
+              <el-input type="password" placeholder="******" />
             </el-collapse-item>
             <el-collapse-item name="4">
               <template #title>
@@ -49,7 +49,7 @@
                   绑定手机号:
                 </div>
               </template>
-              <el-input placeholder="231461564146" />
+              <el-input placeholder="231461564146" :value="phone?phone:'无'" />
             </el-collapse-item>
             <el-collapse-item name="5">
               <template #title>
@@ -65,7 +65,7 @@
                   绑定微信账号:
                 </div>
               </template>
-              <el-input placeholder="231461564146" />
+              <el-input placeholder="未绑定" />
             </el-collapse-item>
             <el-collapse-item name="7">
               <template #title>
@@ -73,7 +73,7 @@
                   绑定新浪微博:
                 </div>
               </template>
-              <el-input placeholder="231461564146" />
+              <el-input placeholder="未绑定" />
             </el-collapse-item>
           </el-collapse>
         </el-scrollbar>
@@ -98,6 +98,12 @@
 
 <script setup>
 import { ref,reactive } from 'vue';
+import useUserStore from '../../../store/user';
+const userStore = useUserStore()
+let name = userStore.name
+let sex = userStore.sex
+let phone = userStore.phone
+let username = userStore.username
 const activeNames = ref(['9'])
 const handleChange = (val) => {
   console.log(activeNames.value);

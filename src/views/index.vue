@@ -22,7 +22,7 @@
                   <!-- class="hot-question-top-image" -->
                   <div class="hot-question-top">
                     <img
-                      :src="item.images"
+                      :src="item.images?item.images:'https://pinia.web3doc.top/logo.svg'"
                       class="hot-question-top-image"
                     />
                     <div class="hot-question-top-content">
@@ -172,7 +172,8 @@ onMounted(()=>{
   // 消息提示框
   ElNotification({
     title: '欢迎欢迎',
-    message: '欢迎来到问书欢迎来到问书'
+    message: '欢迎来到问书欢迎来到问书',
+    duration:3000
   })
 })
 window.addEventListener('error',function(e){

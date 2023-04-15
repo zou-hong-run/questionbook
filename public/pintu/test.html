@@ -1,0 +1,84 @@
+在这里插入代码片
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>drag函数和draggable的使用</title>
+	<style>
+		div.dropTarget{
+			width: 200px;
+			height: 200px;
+			margin-left: 200px;
+			/* display: inline-block; */ 
+			/* div文字对齐的方式  */
+			float: left;
+			border: 1px solid black;
+		}
+		p.demo::before{
+			content: "";
+			display: block;
+			clear: both;
+		}
+		/* 也可以在浮动元素的下一个元素前面里面设置一个before伪元素来清除浮动流 */
+	</style>
+</head>
+<body>
+	<div class="dropTarget">
+		<p id="dragTarget" draggable="true">请拖动我</p>
+	</div>
+	<div class="dropTarget"></div>
+	<p class="demo"></p>
+	<p>看看是否清除了浮动流</p>
+	<script>
+		var p1=document.getElementsByClassName('demo')[0];
+		var drag=document.getElementById('dragTarget');
+		var divtest=document.getElementsByClassName('dropTarget');
+		drag.addEventListener('dragstart',function(e){
+			e.dataTransfer.setData("Id",e.target.id);
+			e.target.style.opacity=0.4;
+			p1.innerHTML="p正在被拖动";
+		});
+		drag.addEventListener('drag',function(e){
+			p1.style.color="red";
+			console.log('这要被拖住就一直会执行');
+		});
+		// 当拖完p元素输出一些文本元素和重置透明度
+		drag.addEventListener('dragend',function(e){
+			console.log('dragend事件比drop事件还要晚执行');
+			e.target.style.opacity=1;
+			p1.innerHTML="p被拖动完成了了了了了了了了了";
+			p1.style.color="";
+		});
+		document.addEventListener('dragenter',function(e){
+			if(e.target.className=='dropTarget'){
+				console.log('我进来了')
+				e.target.style.border="3px dotted red";
+			}
+		});// 默认情况下,数据/元素不能在其他元素中被拖放。对于drop我们必须防止元素的默认处理
+		document.addEventListener('dragover',function(e){
+				e.preventDefault();
+		});// 当可拖放的p元素离开droptarget，重置div的边框样式
+		document.addEventListener('dragleave',function(e){
+			if(e.target.className=='dropTarget'){
+				console.log('我离开了');
+				e.target.style.border="";
+			}
+		});
+		/*对于drop,防止浏览器的默认处理数据(在drop中链接是默认打开)
+		复位输出文本的颜色和DIV的边框颜色
+		利用dataTransfer.getData()方法获得拖放数据
+		拖拖的数据元素id("dragTarget")
+		拖拽元素附加到drop元素*/
+		document.addEventListener('drop',function(e){
+			e.preventDefault();
+			if(e.target.className=='dropTarget'){
+				console.log('这里是drop');
+				var id1=e.dataTransfer.getData('Id');
+				var temp=document.getElementById(id1);
+				e.target.appendChild(temp);
+				e.target.style.border="";
+			}
+		});
+	</script>
+</body>
+</html>
