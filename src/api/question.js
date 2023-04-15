@@ -34,10 +34,25 @@ export function getQuestionPageRandom(){
   })
 }
 // 添加问题
-export function addQuestion(){
+export function addQuestion(title,data,types,images){
+  console.log(title)
+  console.log("====================");
+  console.log(data)
+  console.log("====================");
+  console.log(types)
+  console.log("====================");
+  console.log(images)
+  console.log("====================");
+  let sendData = {
+    title,
+    data,
+    types,
+    images
+  }
   return request({
     url:"/question",
     method:"post",
+    data:sendData
   })
 }
 // 更改问题

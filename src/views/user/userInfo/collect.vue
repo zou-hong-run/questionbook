@@ -4,15 +4,19 @@
     <el-scrollbar height="400px">
       <div class="hot">
         <div class="hot-essay">
-          <el-row style="margin-bottom:10px;" v-for="(item, index) in 14" :key="index">
+          <el-row style="margin-bottom:10px;" v-for="(item, index) in myCollectList" :key="index">
             <el-col class="hot-essay-reply" :span="2">
-              <div>20</div>
+              <div>{{item.sort}}</div>
               <div>回答</div>
             </el-col>
             <el-col :span="22">
               <!-- 文字描述 -->
-              <el-descriptions style="margin:20px;user-select:all;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
-                <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
+              <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
+                <el-descriptions-item>
+                  <template #default>
+                    <div>{{item.data.slice(0,150)+"..."}}</div>
+                  </template>
+                </el-descriptions-item>
               </el-descriptions>
               <!-- 三连 -->
               <div class="hot-essay-likecollectandforward">
@@ -37,7 +41,8 @@ import {ref} from "vue"
 import {myCollect} from "../../../api/user"
 const myCollectList = ref()
 myCollect().then(list=>{
-  console.log(list.data);
+  // console.log(list.data);
+  myCollectList.value = list.data
 })
 
 </script>

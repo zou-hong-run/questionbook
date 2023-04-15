@@ -4,14 +4,18 @@
     <el-scrollbar height="calc(300px)">
       <div class="hot">
         <div class="hot-essay">
-          <el-row style="margin-bottom:10px;" v-for="(item, index) in 14" :key="index">
+          <el-row style="margin-bottom:10px;" v-for="(item, index) in myQuestionList" :key="index">
             <el-col class="hot-essay-reply" :span="2">
-              <el-button size="large" text type="default" icon="ChatSquare">已解决</el-button>
+              <el-button size="large" text type="default" icon="ChatSquare">{{item.solved==0?"未解决":"已解决"}}</el-button>
             </el-col>
             <el-col :span="22">
               <!-- 文字描述 -->
-              <el-descriptions style="margin:20px;user-select:all;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
-                <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
+              <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
+                <el-descriptions-item>
+                  <template #default>
+                    <div>{{item.data.slice(0,150)+"..."}}</div>
+                  </template>
+                </el-descriptions-item>
               </el-descriptions>
               <!-- 三连 -->
               <div class="hot-essay-likecollectandforward">
@@ -36,7 +40,8 @@ import {ref} from "vue"
 import {myQuestion} from "../../../api/user"
 const myQuestionList = ref()
 myQuestion().then(list=>{
-  console.log(list.data);
+  // console.log(list.data);
+  myQuestionList.value = list.data
 })
 
 </script>

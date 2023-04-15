@@ -21,27 +21,27 @@ export function getEssayPageRandom(){
   })
 }
 // 添加文章
-export function addEssay(title,dat,images,types){
+export function addEssay(title,data,images,types){
   return request({
     url:"/text",
     method:"post",
     data:{
       title,
-      dat,
+      data,
       images,
       types
     }
   })
 }
 // 更改文章
-export function updateEssay(id,title,dat,images,types){
+export function updateEssay(id,title,data,images,types){
   return request({
     url:"/text",
     method:"put",
     data:{
       id,
       title,
-      dat,
+      data,
       images,
       types
     }

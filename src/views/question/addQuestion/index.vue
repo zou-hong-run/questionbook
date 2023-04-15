@@ -45,7 +45,7 @@
         align-center
       >
         <div class="dialogbutton">
-          <el-button v-model="buttonVal" @click="setButtonVal(item)" v-for="(item, index) in 20" :key="index" size="small">{{item}}</el-button>
+          <el-button v-model="buttonVal" @click="setButtonVal(item)" v-for="(item, index) in questionTypes" :key="index" size="small">{{item.type}}</el-button>
         </div>
         <template #footer>
           <span class="dialog-footer">
@@ -56,7 +56,7 @@
           </span>
         </template>
         
-        <el-text>选中标签:{{buttonVal?buttonVal:"还没有选择问题标签呢!"}}</el-text>
+        <el-text>选中标签:{{buttonVal?buttonVal.type:"还没有选择问题标签呢!"}}</el-text>
     </el-dialog>
 
     
@@ -93,7 +93,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      height: 200px;
+      height: 100px;
       width: 100%;
       justify-content: start;
       align-content: space-around;
@@ -111,6 +111,17 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { Boot } from '@wangeditor/editor'
 import markdownModule from '@wangeditor/plugin-md'
 import { ElScrollbar } from 'element-plus'
+import {uploadImage} from "@/api/common"
+import {addQuestion} from "@/api/question"
+import useQuestionStore from '../../../store/question'
+const questionStore = useQuestionStore()
+// 获取文章分类
+let questionTypes = questionStore.category
+if(questionTypes.length === 0){
+  questionStore.getQuestionType().then(list=>{
+    questionTypes = list
+  })
+}
 
 // 滚动条 =======================
   const max = ref(0)
@@ -138,6 +149,8 @@ const editorRef = shallowRef()
 
 // 内容 HTML
 const valueHtml = ref('<p>hello</p>')
+// 图片路径
+const images = ref("")
 
 // 模拟 ajax 异步获取内容
 onMounted(() => {
@@ -183,7 +196,26 @@ const editorConfig = {
       // parseImageSrc: customParseImageSrc, // 也支持 async 函数
     },
     uploadImage:{
-      server: '/www.baidu.com',// 上传服务器地址
+      // 自定义上传
+      async customUpload(file, insertFn) { 
+        uploadImage(file).then(res=>{
+          const {errno,data} = res
+          if(errno!==0){
+            alert("图片上传失败")
+            return
+          }
+          const {alt,href,url} = data
+          // file 即选中的文件
+          // 自己实现上传，并得到图片 url alt href
+          images.value = images.value + url +","
+          // 最后插入图片
+          insertFn(url, alt, href)
+        }).catch(err=>{
+          console.error(err);
+        })
+      },
+      // server: 'http://43.143.237.123:6060/images/uploadCos',// 上传服务器地址
+      // server: '/images/uploadCos',// 上传服务器地址
         // form-data fieldName ，默认值 'wangeditor-uploaded-image'
       fieldName: 'image',
 
@@ -206,13 +238,13 @@ const editorConfig = {
       metaWithUrl: false,
 
       // 自定义增加 http  header
-      headers: {
-          Accept: 'text/x-json',
-          // otherKey: 'xxx'
-      },
+      // headers: {
+      //   Accept: 'text/x-json',
+      //     // otherKey: 'xxx'
+      // },
 
       // 跨域是否传递 cookie ，默认为 false
-      withCredentials: true,
+      withCredentials: false,
 
       // 超时时间，默认为 10 秒
       timeout: 5 * 1000, // 5 秒
@@ -222,6 +254,7 @@ const editorConfig = {
       // 上传之前触发
       onBeforeUpload(file) {    // JS 语法
           // file 选中的文件，格式如 { key: file }
+          console.log(file);
           return file
 
           // 可以 return
@@ -290,21 +323,21 @@ const editorConfig = {
 
   // 编辑器回调函数
   const handleCreated = (editor) => {
-    console.log('created', editor);
+    // console.log('created', editor);
     editorRef.value = editor // 记录 editor 实例，重要！
   }
   const handleChange = (editor) => {
     max.value = innerRef.value?.box?.clientHeight;
-    console.log('change:', editor.getHtml());
+    // console.log('change:', editor.getHtml());
   }
   const handleDestroyed = (editor) => {
     console.log('destroyed', editor)
   }
   const handleFocus = (editor) => {
-      console.log('focus', editor)
+      // console.log('focus', editor)
   }
   const handleBlur = (editor) => {
-      console.log('blur', editor)
+      // console.log('blur', editor)
   }
   const customAlert = (info, type) => {
       alert(`【自定义提示】${type} - ${info}`)
@@ -356,12 +389,25 @@ function clickSumbitEssay(){
     return
   }
   centerDialogVisible.value = false;
+  // "<h1>132aa</h1>".match(/[^<h1>][^<]*[^<\/h1>]/)[0]
+  // 这里的.*?是一个正则表达式，表示匹配任意字符（.）零次或多次（*），且尽可能少地匹配（?）。
+  let title = valueHtml.value.match(/<h1.*?>(.*?)<\/h1>/)[1]
+  let data = valueHtml.value
+  // buttonVal.value
+  let types = []
+  types.push({id:buttonVal.value.id})
+
+  addQuestion(title,data,types,images.value).then(res=>{
+    console.log(res);
+  })
 }
 // 设置文章类别
 function setButtonVal(btnVal){
   console.log(btnVal);
   buttonVal.value = btnVal;
 }
+
+
 
 
 </script>

@@ -22,7 +22,7 @@
                   <!-- class="hot-question-top-image" -->
                   <div class="hot-question-top">
                     <img
-                      :src="item.images?item.images:'https://pinia.web3doc.top/logo.svg'"
+                      :src="item.images?item.images.split(',')[0]:'https://pinia.web3doc.top/logo.svg'"
                       class="hot-question-top-image"
                     />
                     <div class="hot-question-top-content">

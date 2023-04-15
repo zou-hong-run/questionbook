@@ -17,6 +17,7 @@ function getUrl(file) {
 //上传图片
 var file = document.querySelector('#start #pic').onchange = function () {
   var fileFiles = document.querySelector('#start #pic').files[0]
+  console.log(fileFiles);
   url = getUrl(fileFiles)
   img.src = url
   //判断图片是否为空
@@ -259,7 +260,7 @@ nodes.push(`
 <tr>
     <td>1</td>
     <td>不要尝试的难度</td>
-    <td>邹红润</td>
+    <td>帅气的开发者</td>
     <td>4天:3时:5分:18秒</td>
   </tr>
 `)

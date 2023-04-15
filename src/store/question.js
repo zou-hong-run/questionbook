@@ -1,9 +1,10 @@
 import {defineStore} from 'pinia'
-import {getQuestionList} from "../api/question"
+import {getQuestionList,getQuestionType} from "../api/question"
 
 const useQuestionStore = defineStore("question",{
   state:()=>({
     list:[],
+    category:[]
   }),
   getters:{
     
@@ -18,7 +19,17 @@ const useQuestionStore = defineStore("question",{
       } catch (error) {
         return new Error(error)
       }
-    }
+    },
+    // 获取问题分类列表
+    async getQuestionType(){
+      try {
+        let res = await getQuestionType()
+        this.category = res.data;
+        return res.data
+      } catch (error) {
+        return new Error(error)
+      }
+    },
   }
 })
 
