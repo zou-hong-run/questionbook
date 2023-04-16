@@ -10,6 +10,7 @@
     background-color: #fff;
     width: 100%;
     height:150px;
+    padding:20px;
     &-title{
       font-weight: bold;
       font-size: 24px;
@@ -18,8 +19,10 @@
       color: skyblue;
     }
     &-type{
-      height: 50px;
-      width: 100px;
+      text-align: center;
+      line-height: 40px;
+      height: 40px;
+      width: 80px;
       border-radius: 15px;
       background-color: burlywood;
     }

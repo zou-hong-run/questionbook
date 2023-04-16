@@ -17,7 +17,9 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-
+// import io from 'socket.io-client'
+// const socket = io("ws://43.143.237.123:6060/websocket")
+// app.config.globalProperties.$io = socket
 app
 .use(router)
 .use(pinia)

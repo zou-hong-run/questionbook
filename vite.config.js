@@ -32,7 +32,12 @@ export default defineConfig({
           // console.log(p.replace(/^\/dev-api/, ''),"====");
           return p.replace(/^\/dev-api/, '')
         }
-      }
-      }
+      },
+      // "ws://43.143.237.123:6060/websocket":{
+      //   target: "ws://43.143.237.123:6060/websocket", //这里是后台ws访问地址
+      //   changeOrigin: true, //允许跨域设置
+      //   ws: true, //websocket代理设置
+      // },
+    }
   }
 })
