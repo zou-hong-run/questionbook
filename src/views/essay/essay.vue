@@ -67,7 +67,6 @@ if(essayStore.list.length===0){
 essayList.value = essayStore.list
 function getAllEssays(){
   essayStore.getEssayList().then(list=>{
-    console.log(list);
     essayList.value = list
   })
 }
@@ -75,7 +74,7 @@ function getAllEssays(){
 const essayTypes = ref()
 if(essayStore.category.length===0){
   essayStore.getEssayType().then(list=>{
-    essayTypes.value = list.data
+    essayTypes.value = list
   })
 }
 essayTypes.value = essayStore.category

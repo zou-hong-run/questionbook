@@ -17,9 +17,10 @@
     <!-- 搜索框 -->
     <div class="searchInput">
       <el-input
+        @change="inputChange(searchVal)"
         v-model="searchVal"
         size="large"
-        placeholder="搜点什么吧"
+        placeholder="搜点什么吧,记得回车"
         suffix-icon="Search"
       />
     </div>
@@ -119,6 +120,10 @@
   }
   // 搜索框文字
   const searchVal = ref("")
+  const inputChange = (inputVal)=>{
+  if(!inputVal){alert("搜索内容为空哦!");return;}
+    router.push("/search?inputval="+inputVal)
+  }
   watch(route,(newRoute,oldRoute)=>{
       // console.log(newRoute.fullPath); // /question?a=b&nnn=5#ja=6
       // console.log(newRoute.hash);//  #ja=6

@@ -162,6 +162,20 @@ const routes = [
       }
     ]
   },
+  // 搜索
+  {
+    path: '/search',
+    component: Layout,
+    meta: { title: '搜索', icon: 'dashboard', affix: true },
+    children:[
+      {
+        path: '',
+        component: () => import('@/views/search/index'),
+        name: 'Search',
+        meta: { title: '搜索页', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
   
   {
     path: '/404',
