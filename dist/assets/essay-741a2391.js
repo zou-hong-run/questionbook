@@ -1,1 +1,0 @@
-import{C as s}from"./index-8a7cc118.js";import{b as r}from"./essay-d7f7a79d.js";const o=s("essay",{state:()=>({list:[]}),getters:{},actions:{async getEssayList(){try{let t=await r();return this.list=t.data,t.data}catch(t){return new Error(t)}}}});export{o as u};

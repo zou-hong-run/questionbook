@@ -1,1 +1,0 @@
-import{B as t}from"./index-8a7cc118.js";function r(){return t({url:"/question",method:"get"})}function o(){return t({url:"/text",method:"get"})}function n(){return t({url:"/collect",method:"get"})}function u(){return t({url:"/like",method:"get"})}export{o as a,n as b,u as c,r as m};

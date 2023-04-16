@@ -1,1 +1,0 @@
-import{B as t}from"./index-8a7cc118.js";function r(){return t({url:"/text/list",method:"get"})}function n(){return t({url:"/text/type",method:"get"})}function o(e){return t({url:`/text/byType/${e}`,method:"get"})}function u(e){return t({url:`/text/${e}`,method:"get"})}export{o as a,r as b,u as c,n as g};

@@ -1,1 +1,0 @@
-import{C as e}from"./index-8a7cc118.js";import{b as s}from"./question-6fb1a9cc.js";const o="/assets/fill_小火苗-1c0bdad9.png",i=e("question",{state:()=>({list:[]}),getters:{},actions:{async getQuestionList(){try{let t=await s();return this.list=t.data,t.data}catch(t){return new Error(t)}}}});export{o as e,i as u};

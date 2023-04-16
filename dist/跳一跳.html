@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>跳一跳</title>
+  <style>
+    *{padding: 0;margin: 0;}
+    .game{
+      position: relative;
+      width: 800px;
+      height: 400px;
+      border: 1px solid black;
+      margin: 0 auto;
+    }
+    .game .content{
+      position: absolute;
+      width: 800px;
+      height: 400px;
+      left: 0;
+      top: 0;
+    }
+    .game #chess{
+      position: absolute;
+      width: 40px;
+      height: 48px;
+      overflow: hidden;
+      z-index:99;
+      transition-property: all;
+    }
+    .cylinder{
+      position: relative;
+      width: 70px;
+      height: 101px;
+      float: left;
+    }
+    .cylinder .top{
+      position: absolute;
+      width: 70px;
+      height: 35px;
+      border-radius: 50%;
+      background: yellow;
+      z-index: 4;
+    } 
+    .cylinder .front{
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      background: black;
+      margin-top: 17px;
+      z-index: 3;
+    }
+    .cylinder .bottom{
+      position: absolute;
+      width: 70px;
+      height: 35px;
+      border-radius: 50%;
+      background: black;
+      margin-top: 65px;
+      z-index: 4;
+    }
+    button{
+      position: absolute;
+      width: 80px;
+      height: 30px;
+      font-size: 16px;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 20%;
+      bottom: 10px;
+      right: 10px;
+    }
+    .move{
+      animation-name: jump;
+    }
+    /* �����˶����� */
+    @keyframes jump{
+      0%{transform: rotate(0deg);}
+      10%{transform: rotate(36deg);}
+      20%{transform: rotate(72deg);}
+      30%{transform: rotate(108deg);}
+      40%{transform: rotate(144deg);}
+      50%{transform: rotate(180deg);}
+      60%{transform: rotate(216deg);}
+      70%{transform: rotate(252deg);}
+      80%{transform: rotate(288deg);}
+      90%{transform: rotate(324deg);}
+      100%{transform: rotate(360deg);}
+    }
+    @-webkit-keyframes jump{
+      0%{transform: rotate(0deg);}
+      10%{transform: rotate(36deg);}
+      20%{transform: rotate(72deg);}
+      30%{transform: rotate(108deg);}
+      40%{transform: rotate(144deg);}
+      50%{transform: rotate(180deg);}
+      60%{transform: rotate(216deg);}
+      70%{transform: rotate(252deg);}
+      80%{transform: rotate(288deg);}
+      90%{transform: rotate(324deg);}
+      100%{transform: rotate(360deg);}
+    }
+    @-o-keyframes jump{
+      0%{transform: rotate(0deg);}
+      10%{transform: rotate(36deg);}
+      20%{transform: rotate(72deg);}
+      30%{transform: rotate(108deg);}
+      40%{transform: rotate(144deg);}
+      50%{transform: rotate(180deg);}
+      60%{transform: rotate(216deg);}
+      70%{transform: rotate(252deg);}
+      80%{transform: rotate(288deg);}
+      90%{transform: rotate(324deg);}
+      100%{transform: rotate(360deg);}
+    }
+    @-moz-keyframes jump{
+      0%{transform: rotate(0deg);}
+      10%{transform: rotate(36deg);}
+      20%{transform: rotate(72deg);}
+      30%{transform: rotate(108deg);}
+      40%{transform: rotate(144deg);}
+      50%{transform: rotate(180deg);}
+      60%{transform: rotate(216deg);}
+      70%{transform: rotate(252deg);}
+      80%{transform: rotate(288deg);}
+      90%{transform: rotate(324deg);}
+      100%{transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <div class="content">
+      <!-- Բ���� -->
+      <div class="cylinder">
+        <!-- ���� -->
+        <div class="top"></div>
+        <!-- ǰ�� -->
+        <div class="front"></div>
+        <!-- �ײ� -->
+        <div class="bottom"></div>
+      </div>
+    </div>
+    <!-- ���� -->
+    <div id="chess">
+      <div style="width:20px;height:20px;border-radius:50%;background:red;position:absolute;margin-left:13px;z-index: 100;"></div>
+      <div style="width:40px;height:40px;background:blue;overflow: hidden;margin-top: 32px;transform:rotate(67deg) skewX(40deg);">
+      </div>
+    </div>
+    <button id="play" style="width:100px;">长按蓄力跳跃</button>
+  </div>
+</body>
+<script>
+  var time = 0,score = 0,prev = 1;
+  var cylinders = document.getElementsByClassName('cylinder');
+  var chess = document.getElementById('chess');
+  var arrLeft = [10,20,30,50];
+  var arrTop = [210,290];
+  function init(){
+    draw();
+    BindEvent();
+  };
+  function draw(){
+    var str = '';
+    for(var n = 0; n < 7; n++){
+      str +="<div class='cylinder'><div class='top'></div><div class='front'></div><div class='bottom'></div></div >"
+    }
+    document.getElementsByClassName('content')[0].innerHTML = str;
+    for(var m = 0; m < 7; m++){
+      var Left = arrLeft[Math.floor(Math.random() *arrLeft.length)];
+      var Top = arrTop[Math.floor(Math.random() * arrTop.length)];
+      cylinders[m].style.marginLeft = Left + 'px';
+      cylinders[m].style.marginTop = Top + 'px';
+    }
+    chess.style.marginTop = cylinders[0].offsetTop - 25 + 'px';
+    chess.style.marginLeft = cylinders[0].offsetLeft + 13 + 'px';
+  }
+  function BindEvent(){
+    document.getElementById('play').onmousedown = function () {
+      var timer = setInterval(function () {
+        time++;
+      }, 100);
+      document.getElementById('play').onmouseup = function () {
+        clearInterval(timer);
+        chess.classList.add('move');
+        chess.style.animationDuration = time * 0.1 + 's';
+        chess.style.transitionDuration = time * 0.1 + 's';
+        if (cylinders[prev - 1].offsetTop > cylinders[prev].offsetTop) {
+          var dx = setTran(prev - 1,prev);
+          chess.style.marginLeft = chess.offsetLeft + time * 15 + 'px';
+          chess.style.marginTop = chess.offsetTop + time * 15 * dx + 'px';
+        } else if (cylinders[prev - 1].offsetTop < cylinders[prev].offsetTop) {
+          var dy = setTran(prev - 1, prev);
+          chess.style.marginLeft = chess.offsetLeft + time * 15 + 'px';
+          chess.style.marginTop = chess.offsetTop + time * 15 * dy + 'px';
+        }else if(cylinders[prev - 1].offsetTop == cylinders[prev].offsetTop){
+          chess.style.marginTop = chess.offsetTop + 'px';
+          chess.style.marginLeft = chess.offsetLeft + time * 15 + 'px';
+        }
+        chess.addEventListener(getTransition(), function () {
+          chess.classList.remove('move');
+          time = 0;
+          judeg();
+          chess.removeEventListener(getTransition(), arguments.callee, false);
+        }, false);
+      };
+    };
+  };
+  function setTran(prev,next) {
+    var d_Top = cylinders[prev].offsetTop - cylinders[next].offsetTop;
+    var d_Left = cylinders[prev].offsetLeft - cylinders[next].offsetLeft;
+    return d_Top/d_Left;
+  }
+  function getTransition() {
+    var t;
+    var transitions = {
+      'transition': 'transitionend',
+      'OTransition': 'oTransitionEnd',
+      'MozTransition': 'transitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+    for (t in transitions) {
+      if (chess.style[t] !== undefined) {
+        return transitions[t];
+      }
+    }
+  };
+  function judeg() {
+    for(; prev < cylinders.length;){
+      var e_Left = chess.offsetLeft > cylinders[prev].offsetLeft -20 && chess.offsetLeft < cylinders[prev].offsetLeft + 90;
+      var e_Top = chess.offsetTop + 48 > cylinders[prev].offsetTop && chess.offsetTop + 48 < cylinders[prev].offsetTop + 35;
+      if( e_Left && e_Top ){
+        score++;
+        if(prev >= cylinders.length){
+          prev = 1;
+        }else{
+          prev++;
+        }
+        break;
+      }else{
+        alert('you lost');
+        break;
+      }
+    }
+  }
+  init();
+</script>
+</html>
