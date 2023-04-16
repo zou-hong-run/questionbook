@@ -148,14 +148,41 @@
   </div>
 </template>
 <script setup>
-import {onMounted,ref,reactive,nextTick} from "vue"
+import {onMounted,ref,reactive,nextTick,getCurrentInstance} from "vue"
 import discussionLogo from "../assets/indexIcons/没有问题.png"
 import embers from '../assets/indexIcons/fill_小火苗.png'
 import { ElNotification } from 'element-plus'
-
-
 import useQuestionStore from "../store/question"
 import useEssayStore from "../store/essay"
+// const { proxy } = getCurrentInstance();
+// const io = proxy.$io
+// console.log(io);
+
+let token = 'Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzEzMjU2Mjk3fQ.gpzCbbiRNGHRlspIZ6hgssDpgTdiOUmkVSM5OZfMWLUU'
+var ws = new WebSocket("ws://43.143.237.123:6060/websocket",[token]);
+ws.onopen = function() {
+    // Web Socket 已连接上，使用 send() 方法发送数据
+    /*
+    {
+      data:{
+        "userId":1,
+        "toUserId":1,
+        "message":"dddd",
+        flag:"icon",
+        "quetionId":123
+      }
+    }
+    */
+    ws.send();
+    console.log('open');
+};
+ws.onmessage = function (e) { 
+  console.log('message', e.data);
+};
+ws.onclose = function() { 
+  console.log('close');
+};
+
 const questionStore = useQuestionStore()
 const essayStore = useEssayStore()
 
@@ -169,6 +196,7 @@ essayStore.getEssayList().then(list=>{
 });
 
 onMounted(()=>{
+
   // 消息提示框
   ElNotification({
     title: '欢迎欢迎',
