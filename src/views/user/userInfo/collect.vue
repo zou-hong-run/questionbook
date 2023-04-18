@@ -6,29 +6,61 @@
         <div class="hot-essay">
           <el-row @click="goPage(item.solved==='undefined'?'/essay/essayItem/'+item.id:'/question/questionItem/'+item.id)" 
             style="margin-bottom:10px;" 
-            v-for="(item, index) in myCollectList" 
+            v-for="(item, index) in questions" 
             :key="index">
             <!-- <el-link :href="item.solved==='undefined'?'/#/essay/essayItem/'+item.id:'/#/question/questionItem/'+item.id"> -->
               <el-col class="hot-essay-reply" :span="2">
-                <div>{{item.sort}}</div>
-                <div>回答</div>
+                <div>{{item?.solved===0?"未解决":"已解决"}}</div>
               </el-col>
               <el-col :span="22">
                 <!-- 文字描述 -->
-                <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
+                <el-descriptions style="margin:20px;user-select:all;" :title="item?.title">
                   <el-descriptions-item>
                     <template #default>
-                      <div>{{item.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'}}</div>
+                      <div>{{item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'}}</div>
                     </template>
                   </el-descriptions-item>
                 </el-descriptions>
                 <!-- 三连 -->
-                <div class="hot-essay-likecollectandforward">
+                <!-- <div class="hot-essay-likecollectandforward">
                   <el-button text type="primary" icon="ChatSquare">评论</el-button>
                   <el-button text type="primary" icon="Pointer">点赞</el-button>
                   <el-button text type="primary" icon="Star">收藏</el-button>
                   <el-button text type="primary" icon="Share">转发</el-button>
-                </div>
+                </div> -->
+              </el-col>
+              
+              <!-- 分割线 -->
+              <el-divider></el-divider>
+              
+                
+            <!-- </el-link> -->
+          </el-row>
+          <el-row @click="goPage(item.solved==='undefined'?'/essay/essayItem/'+item.id:'/question/questionItem/'+item.id)" 
+            style="margin-bottom:10px;" 
+            v-for="(item, index) in texts" 
+            :key="index">
+            <!-- <el-link :href="item.solved==='undefined'?'/#/essay/essayItem/'+item.id:'/#/question/questionItem/'+item.id"> -->
+              <el-col class="hot-essay-reply" :span="2">
+                <div>{{item?.sort}}</div>
+                <div>回答</div>
+              </el-col>
+              <el-col :span="22">
+                <!-- 文字描述 -->
+                <el-descriptions style="margin:20px;user-select:all;" :title="item?.title">
+                  <el-descriptions-item>
+                    <template #default>
+                      <div>{{item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'}}</div>
+                    </template>
+                  </el-descriptions-item>
+                </el-descriptions>
+                <!-- 三连 -->
+                <!-- <div class="hot-essay-likecollectandforward">
+                  <el-button text type="primary" icon="ChatSquare">评论</el-button>
+                  <el-button text type="primary" icon="Pointer">点赞</el-button>
+                  <el-button text type="primary" icon="Star">收藏</el-button>
+                  <el-button text type="primary" icon="Share">转发</el-button>
+                </div> -->
               </el-col>
               
               <!-- 分割线 -->
@@ -51,10 +83,12 @@ const router = useRouter()
 const goPage = (url)=>{
   router.push(url)
 }
-const myCollectList = ref()
+const questions = ref()
+const texts = ref()
 myCollect().then(list=>{
   // console.log(list.data);
-  myCollectList.value = list.data
+  questions.value = list.data.questions
+  texts.value = list.data.texts
 })
 
 </script>

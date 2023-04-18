@@ -51,13 +51,13 @@
               />
             </el-form-item>
             <el-form-item label="用户名">
-              <el-input style="width:200px;" disabled v-model="item.name" type="text"/>
+              <el-input style="width:200px;" disabled :value="item.name?item.name:'猪猪'" type="text"/>
             </el-form-item>
             <el-form-item label="评论时间">
-              <el-input style="width:200px;" disabled v-model="item.datetime" type="text"/>
+              <el-input style="width:200px;" disabled :value="item.datetime?item.datetime:'13:56'" type="text"/>
             </el-form-item>
             <el-form-item label="评论内容">
-              <el-input style="width:700px;" disabled  v-model="item.content" type="textarea"/>
+              <el-input style="width:700px;" disabled :value="item.content?item.content:'好牛哇,学到了很多'" type="textarea"/>
             </el-form-item>
           </el-form>
           
@@ -70,6 +70,10 @@
       </div>
       <div class="essayItem-right-content">
         <el-link href="/">手把手教你如何让网页跳转到首页</el-link>
+        <el-link href="/question">手把手教你如何让网页跳转到问题页面</el-link>
+        <el-link href="/essay">手把手教你如何让网页跳转到文章页面</el-link>
+        <el-link href="/game">手把手教你如何让网页跳转到游戏页面</el-link>
+        <el-link href="/question/addQuestion">手把手教你如何让网页跳转到提问页面</el-link>
       </div>
     </div>
   </div>
@@ -223,6 +227,10 @@
     }
     &-content{
       padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
