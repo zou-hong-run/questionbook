@@ -30,7 +30,7 @@
                 <el-col :span="22"  >
                   <!-- 文字描述 -->
                   <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
-                    <el-descriptions-item label-class-name="hot-essay-descriptions" :label="item.data.slice(0,120)+'...'"></el-descriptions-item>
+                    <el-descriptions-item label-class-name="hot-essay-descriptions" :label="item.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'"></el-descriptions-item>
                   </el-descriptions>
                   <!-- 三连 -->
                   <div class="hot-essay-likecollectandforward">

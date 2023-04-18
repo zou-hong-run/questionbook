@@ -114,7 +114,12 @@ import { ElScrollbar } from 'element-plus'
 import {uploadImage} from "@/api/common"
 import {addQuestion} from "@/api/question"
 import useQuestionStore from '../../../store/question'
+import { ElNotification } from 'element-plus'
+import {useRoute,useRouter} from "vue-router"
+const route = useRoute()
+const router = useRouter()
 const questionStore = useQuestionStore()
+
 // 获取文章分类
 let questionTypes = questionStore.category
 if(questionTypes.length === 0){
@@ -398,7 +403,38 @@ function clickSumbitEssay(){
   types.push({id:buttonVal.value.id})
 
   addQuestion(title,data,types,images.value).then(res=>{
-    console.log(res);
+    ElNotification({
+      title: '添加文章成功',
+      position: 'bottom-right',
+      message: 'ohohohohohohoh!!!!!!!!!',
+      duration: 2000,
+    })
+    ElNotification({
+      title: '添加文章成功',
+      position: 'top-right',
+      message: 'ohohohohohohoh!!!!!!!!!',
+      duration: 2000,
+    })
+    ElNotification({
+      title: '添加文章成功',
+      position: 'bottom-right',
+      message: 'ohohohohohohoh!!!!!!!!!',
+      duration: 2000,
+    })
+    ElNotification({
+      title: '添加文章成功',
+      position: 'bottom-left',
+      message: 'ohohohohohohoh!!!!!!!!!',
+      duration: 2000,
+    })
+    ElNotification({
+      title: '添加文章成功',
+      position: 'top-left',
+      message: 'ohohohohohohoh!!!!!!!!!',
+      duration: 2000,
+    })
+    let data = res.data
+    router.push(`/question/questionItem/${data}`)
   })
 }
 // 设置文章类别

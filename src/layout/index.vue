@@ -33,7 +33,9 @@ import topNav from "../components/topNav/index.vue"
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #fff;
+      background-color: #fff;
+      background-image: linear-gradient(0deg, #fff5ff 98%, #eee5e5 2%);
+
     }
   }
 </style>

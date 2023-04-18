@@ -35,14 +35,6 @@ export function getQuestionPageRandom(){
 }
 // 添加问题
 export function addQuestion(title,data,types,images){
-  console.log(title)
-  console.log("====================");
-  console.log(data)
-  console.log("====================");
-  console.log(types)
-  console.log("====================");
-  console.log(images)
-  console.log("====================");
   let sendData = {
     title,
     data,
@@ -72,22 +64,36 @@ export function getQuestionListByType(id){
     method:"get",
   })
 }
-// 添加评论
-export function addQuestionComment(msg,data,code){
-  return request({
-    url:"comment/toQuestion",
-    method:"post",
-    data:{
-      msg,
-      data,
-      code
-    }
-  })
-}
+
 // 删除评论
 export function deleteComment(id){
   return request({
     url:`/question/${id}`,
     method:"delete",
+  })
+}
+
+// 添加评论
+export function addQuestionComment(data,questionId){
+  return request({
+    url:"comment/toQuestion",
+    method:"post",
+    data:{
+      data,questionId
+    }
+  })
+}
+// 点赞问题
+export function likeQuestion(id){
+  return request({
+    url:`/like/likeQuestion/${id}`,
+    method:"post"
+  })
+}
+// 收藏问题
+export function collectQuestion(id){
+  return request({
+    url:`/collect/collectQuestion/${id}`,
+    method:"post"
   })
 }

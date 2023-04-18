@@ -1,30 +1,35 @@
 <template>
   <div class="userLike">
     <!-- 热门文章 -->
-    <el-scrollbar height="400px">
+    <el-scrollbar height="600px">
       <div class="hot">
         <div class="hot-essay">
-          <el-row style="margin-bottom:10px;" v-for="(item, index) in 14" :key="index">
-            <el-col class="hot-essay-reply" :span="2">
-              <div>20</div>
-              <div>回答</div>
-            </el-col>
-            <el-col :span="22">
-              <!-- 文字描述 -->
-              <el-descriptions style="margin:20px;user-select:all;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
-                <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
-              </el-descriptions>
-              <!-- 三连 -->
-              <div class="hot-essay-likecollectandforward">
-                <el-button text type="default" icon="ChatSquare">评论</el-button>
-                <el-button text type="default" icon="Pointer">点赞</el-button>
-                <el-button text type="default" icon="Star">收藏</el-button>
-                <el-button text type="default" icon="Share">转发</el-button>
-              </div>
-            </el-col>
-            
-            <!-- 分割线 -->
-            <el-divider></el-divider>
+          <el-row 
+            @click="goPage(item.solved==='undefined'?'/essay/essayItem/'+item.id:'/question/questionItem/'+item.id)" 
+            style="margin-bottom:10px;" 
+            v-for="(item, index) in myLikeList" :key="index">
+            <!-- <el-link :href="item.solved==='undefined'?'/#/essay/essayItem/'+item.id:'/#/question/questionItem/'+item.id"> -->
+              <el-col :span="22">
+                <!-- 文字描述 -->
+                <el-descriptions style="margin:20px;user-select:all;" :title="item.title">
+                  <el-descriptions-item>
+                    <template #default>
+                      <div>{{item.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'}}</div>
+                    </template>
+                  </el-descriptions-item>
+                </el-descriptions>
+                <!-- 三连 -->
+                <div class="hot-essay-likecollectandforward">
+                  <el-button text type="primary" icon="ChatSquare">评论</el-button>
+                  <el-button text type="primary" icon="Pointer">点赞</el-button>
+                  <el-button text type="primary" icon="Star">收藏</el-button>
+                  <el-button text type="primary" icon="Share">转发</el-button>
+                </div>
+              </el-col>
+              
+              <!-- 分割线 -->
+              <el-divider></el-divider>
+            <!-- </el-link> -->
           </el-row>
         </div>
       </div>
@@ -35,9 +40,14 @@
 <script setup>
 import {ref} from "vue"
 import {myLike} from "../../../api/user"
+import {useRoute,useRouter} from "vue-router"
+const router = useRouter()
+const goPage = (url)=>{
+  router.push(url)
+}
 const myLikeList = ref()
 myLike().then(list=>{
-  console.log(list.data);
+  myLikeList.value = list.data;
 })
 
 </script>

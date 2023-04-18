@@ -54,18 +54,6 @@ export function getEssayListByType(id){
     method:"get",
   })
 }
-// 添加评论
-export function addEssayComment(data,userId,textId){
-  return request({
-    url:"/comment/toText",
-    method:"post",
-    data:{
-      data,
-      userId,
-      textId
-    }
-  })
-}
 // 删除文章
 export function deleteEssayComment(id){
   return request({
@@ -78,5 +66,30 @@ export function getEssayComment(id){
   return request({
     url:`/text/${id}`,
     method:"get",
+  })
+}
+// 点赞文章
+export function likeEssay(id){
+  return request({
+    url:`/like/likeText/${id}`,
+    method:"post",
+  })
+}
+// 收藏文章
+export function collectEssay(id){
+  return request({
+    url:`/collect/collectText/${id}`,
+    method:"post",
+  })
+}
+// 添加文章评论
+export function addEssayComment(data,textId){
+  return request({
+    url:`/comment/toText`,
+    method:"post",
+    data:{
+      data,
+      textId
+    }
   })
 }
