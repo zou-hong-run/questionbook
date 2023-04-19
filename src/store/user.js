@@ -8,6 +8,7 @@ const useUserStore = defineStore("user",{
     name:"",
     username:'',
     avatar:"",
+    id:'',
 
     roles:[],
     permissions:[],
@@ -52,6 +53,8 @@ const useUserStore = defineStore("user",{
           const avatar = res.data.avatar// 
           const image = res.data.image
           const username = res.data.username
+          const id = res.data.id
+          this.id = id
           this.name = name
           this.avatar = avatar
           this.image = image

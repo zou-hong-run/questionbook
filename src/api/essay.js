@@ -62,7 +62,7 @@ export function deleteEssayComment(id){
   })
 }
 // 获取单个文章
-export function getEssayComment(id){
+export function getEssayContent(id){
   return request({
     url:`/text/${id}`,
     method:"get",
@@ -91,5 +91,12 @@ export function addEssayComment(data,textId){
       data,
       textId
     }
+  })
+}
+// 获取文章评论列表
+export function getEssayCommentList(id){
+  return request({
+    url:`/comment/getTextComment/${id}`,
+    method:"get"
   })
 }

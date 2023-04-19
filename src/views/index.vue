@@ -59,7 +59,7 @@
                   <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
                 </el-descriptions> -->
                 <el-descriptions style="margin:20px;" :title="item.title">
-                  <el-descriptions-item :label="item.data"></el-descriptions-item>
+                  <el-descriptions-item :label="item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,200)+'...'"></el-descriptions-item>
                 </el-descriptions>
                 <!-- 三连 -->
                 <div class="hot-essay-likecollectandforward">
@@ -80,7 +80,7 @@
     <div class="index-right">
       
       <div class="discussion-title">
-        <div class="discussion-title-text">问题推送</div>
+        <div class="discussion-title-text">问题推送(点击问题一起讨论吧)</div>
         <img class="discussion-title-img" :src="discussionLogo" alt="">
       </div>
       
@@ -131,7 +131,7 @@
                 <img v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
               </div>
             </div>
-            <div class="discussion-content-right">
+            <div class="discussion-content-right" @click="goPage('id')">
               <div class="discussion-content-right-username">小叶</div>
               <div class="discussion-content-right-content">
                 <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
@@ -148,68 +148,84 @@
   </div>
 </template>
 <script setup>
-import {onMounted,ref,reactive,nextTick,getCurrentInstance} from "vue"
-import discussionLogo from "../assets/indexIcons/没有问题.png"
-import embers from '../assets/indexIcons/fill_小火苗.png'
-import { ElNotification } from 'element-plus'
-import useQuestionStore from "../store/question"
-import useEssayStore from "../store/essay"
-// const { proxy } = getCurrentInstance();
-// const io = proxy.$io
-// console.log(io);
+  import {onMounted,ref,reactive,nextTick,getCurrentInstance} from "vue"
+  import discussionLogo from "../assets/indexIcons/没有问题.png"
+  import embers from '../assets/indexIcons/fill_小火苗.png'
+  import { ElNotification } from 'element-plus'
+  import useUserStore from "../store/user";
+  import useQuestionStore from "../store/question"
+  import useEssayStore from "../store/essay"
+  import {useRoute,useRouter} from "vue-router"
+  const userStore = useUserStore()
+  const route = useRoute()
+  const router = useRouter()
+  // const { proxy } = getCurrentInstance();
+  // const io = proxy.$io
+  // console.log(io);
 
-let token = 'Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzEzMjU2Mjk3fQ.gpzCbbiRNGHRlspIZ6hgssDpgTdiOUmkVSM5OZfMWLUU'
-var ws = new WebSocket("ws://43.143.237.123:6060/websocket",[token]);
-ws.onopen = function() {
-    // Web Socket 已连接上，使用 send() 方法发送数据
-    /*
-    {
-      data:{
-        "userId":1,
-        "toUserId":1,
-        "message":"dddd",
-        flag:"icon",
-        "quetionId":123
+  let token = 'Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzEzMjU2Mjk3fQ.gpzCbbiRNGHRlspIZ6hgssDpgTdiOUmkVSM5OZfMWLUU'
+  var ws = new WebSocket("ws://43.143.237.123:6060/websocket",[token]);
+  let userId = userStore.id
+  ws.onopen = function() {
+      // Web Socket 已连接上，使用 send() 方法发送数据
+      /*
+      {
+        data:{
+          "userId":1,
+          "toUserId":1,
+          "message":"dddd",
+          flag:"icon",
+          "quetionId":123
+        }
       }
-    }
-    */
-    ws.send();
-    console.log('open');
-};
-ws.onmessage = function (e) { 
-  console.log('message', e.data);
-};
-ws.onclose = function() { 
-  console.log('close');
-};
+      */
+     let data = {
+        "userId": userId,
+        "toUserId":null,
+        "message":null,
+        "flag":"icon",
+        "questionId":null
+        }
+      ws.send(data);
+      console.log('open');
+  };
+  ws.onmessage = function (e) { 
+    console.log('message', e.data);
+  };
+  ws.onclose = function() { 
+    console.log('close');
+  };
 
-const questionStore = useQuestionStore()
-const essayStore = useEssayStore()
+  const questionStore = useQuestionStore()
+  const essayStore = useEssayStore()
 
-const questionList = ref()
-const essayList = ref()
-questionStore.getQuestionList().then(list=>{
-  questionList.value = list
-});
-essayStore.getEssayList().then(list=>{
-  essayList.value = list
-});
+  const questionList = ref()
+  const essayList = ref()
+  questionStore.getQuestionList().then(list=>{
+    questionList.value = list
+  });
+  essayStore.getEssayList().then(list=>{
+    essayList.value = list
+  });
+  const goPage = (id)=>{
+    router.push("question/questionItem/"+id)
+  }
 
-onMounted(()=>{
+  onMounted(()=>{
 
-  // 消息提示框
-  ElNotification({
-    title: '欢迎欢迎',
-    message: '欢迎来到问书欢迎来到问书',
-    duration:3000
+    // 消息提示框
+    ElNotification({
+      title: '欢迎欢迎',
+      message: '欢迎来到问书欢迎来到问书',
+      duration:2500
+    })
   })
-})
-window.addEventListener('error',function(e){
-    //当前异常是由图片加载异常引起的
-    if( e.target.tagName?.toUpperCase() === 'IMG' ){
-        e.target.src = "https://pinia.web3doc.top/logo.svg";
-    }
-},true)
+  window.addEventListener('error',function(e){
+      //当前异常是由图片加载异常引起的
+      if( e.target.tagName?.toUpperCase() === 'IMG' ){
+          e.target.src = "https://pinia.web3doc.top/logo.svg";
+      }
+  },true)
 
 
 </script>
@@ -327,7 +343,7 @@ window.addEventListener('error',function(e){
       .discussion-title{
         border-radius: 5px;
         user-select: none;
-        height: 100px;
+        height: 150px;
         width: 100%;
         background: linear-gradient(to bottom,#B1CDF8,#ffffff);
         display: flex;
@@ -342,7 +358,7 @@ window.addEventListener('error',function(e){
         &-text{
           margin-left: 20px;
           color: white;
-          font-size: 18px;
+          font-size: 17px;
           font-weight: bold;
           margin-bottom: 50px;
         }
@@ -355,7 +371,7 @@ window.addEventListener('error',function(e){
       .discussion-content{
         width: calc(100% - 20px);
         padding: 0 10px 0;
-        height: calc(100% - 100px);
+        height: calc(100% - 100px - 50px);
         background: #ffffff;
         &-itemcontent{
           width: 100%;
@@ -364,6 +380,7 @@ window.addEventListener('error',function(e){
         }
         // 左右聊天项共有属性
         &-left,&-right{
+          
           user-select: all;
           margin-bottom: 10px ;
           height: auto;
@@ -407,6 +424,11 @@ window.addEventListener('error',function(e){
               height: 150px;
             }
           }
+        }
+        &-left:hover,&-right:hover{
+          color: black;
+          text-decoration: underline;
+          background-color: #eff1f5;
         }
 
       }

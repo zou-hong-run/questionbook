@@ -65,13 +65,14 @@
     <el-scrollbar style="width: 100%;height:50px;">
       <div class="questionItem-bottom">
         <el-button ><el-icon><CirclePlus /></el-icon></el-button>
-        <el-button>发送</el-button>
         <el-input
           v-model="inputVal"
           :autosize="{ minRows: 2, maxRows: 4 }"
           type="input"
-          placeholder="Please input"
+          placeholder="尽情讨论吧!"
         />
+        
+        <el-button>发送</el-button>
         <el-button @click="addCollectQuestion" type="default"><el-icon><Star /></el-icon>收藏</el-button>
         <el-button @click="addLikeQuestion" type="default"><el-icon><Pointer /></el-icon>点赞</el-button>
         <el-button type="primary" disabled  >问题类型:</el-button>

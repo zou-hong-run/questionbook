@@ -73,14 +73,11 @@ export function deleteComment(id){
   })
 }
 
-// 添加评论
-export function addQuestionComment(data,questionId){
+// 获取问题评论列表
+export function getQuestionCommentList(id){
   return request({
-    url:"comment/toQuestion",
-    method:"post",
-    data:{
-      data,questionId
-    }
+    url:`/comment/getQuestionComment/${id}`,
+    method:"get"
   })
 }
 // 点赞问题
@@ -95,5 +92,16 @@ export function collectQuestion(id){
   return request({
     url:`/collect/collectQuestion/${id}`,
     method:"post"
+  })
+}
+
+// 添加评论
+export function addQuestionComment(data,questionId){
+  return request({
+    url:"comment/toQuestion",
+    method:"post",
+    data:{
+      data,questionId
+    }
   })
 }

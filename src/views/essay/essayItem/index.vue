@@ -40,7 +40,7 @@
       </div>
       
       <el-scrollbar class="essayItem-left-comment">
-        <div v-for="(item, index) in 10" :key="index" style="background:#F5F6F8;margin:40px;border-bottom:1px solid #ccc;">
+        <div v-for="(item, index) in contentData" :key="index" style="background:#F5F6F8;margin:40px;border-bottom:1px solid #ccc;">
           <el-form
             status-icon
             label-width="100px"
@@ -54,10 +54,10 @@
               <el-input style="width:200px;" disabled :value="item.name?item.name:'猪猪'" type="text"/>
             </el-form-item>
             <el-form-item label="评论时间">
-              <el-input style="width:200px;" disabled :value="item.datetime?item.datetime:'13:56'" type="text"/>
+              <el-input style="width:200px;" disabled :value="item.createTime?item.createTime:'**:**'" type="text"/>
             </el-form-item>
             <el-form-item label="评论内容">
-              <el-input style="width:700px;" disabled :value="item.content?item.content:'好牛哇,学到了很多'" type="textarea"/>
+              <el-input style="width:700px;" disabled :value="item.data?item.data:'好牛哇,学到了很多'" type="textarea"/>
             </el-form-item>
           </el-form>
           
@@ -70,10 +70,10 @@
       </div>
       <div class="essayItem-right-content">
         <el-link href="/">手把手教你如何让网页跳转到首页</el-link>
-        <el-link href="/question">手把手教你如何让网页跳转到问题页面</el-link>
-        <el-link href="/essay">手把手教你如何让网页跳转到文章页面</el-link>
-        <el-link href="/game">手把手教你如何让网页跳转到游戏页面</el-link>
-        <el-link href="/question/addQuestion">手把手教你如何让网页跳转到提问页面</el-link>
+        <el-link href="/#/question">手把手教你如何让网页跳转到问题页面</el-link>
+        <el-link href="/#/essay">手把手教你如何让网页跳转到文章页面</el-link>
+        <el-link href="/#/game">手把手教你如何让网页跳转到游戏页面</el-link>
+        <el-link href="/#/question/addQuestion">手把手教你如何让网页跳转到提问页面</el-link>
       </div>
     </div>
   </div>
@@ -82,9 +82,10 @@
 <script setup>
   import {ref,reactive} from 'vue'
   import {useRoute,useRouter} from 'vue-router'
-  import {getEssayComment,likeEssay,collectEssay,addEssayComment}  from "../../../api/essay"
+  import {getEssayContent,likeEssay,collectEssay,addEssayComment}  from "../../../api/essay"
   import { ElMessageBox,ElNotification } from 'element-plus'
   import useUserStore from '../../../store/user'
+import { getEssayCommentList } from '../../../api/essay'
   const userStore = useUserStore()
   const name = userStore.name
   const image = userStore.image
@@ -96,12 +97,14 @@
   const route = useRoute()
   const router = useRouter()
   const essayData = ref()
+  const contentData = ref()
 
   let essayDataId = route.params.id
   if(!essayDataId){
     alert('页面id不存在')
   }
-  getEssayComment(essayDataId).then(list=>{
+  // 
+  getEssayContent(essayDataId).then(list=>{
     console.log(list.data);
     essayData.value = list.data
   }).catch(err=>{
@@ -113,6 +116,10 @@
       .catch(() => {
         router.back()
       })
+  })
+  getEssayCommentList(essayDataId).then(list=>{
+    contentData.value = list.data
+    
   })
 
 
