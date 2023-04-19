@@ -47,11 +47,11 @@
           >
             <el-form-item label="头像">
               <el-avatar
-                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                :src="item.user.image?item.user.image:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
               />
             </el-form-item>
             <el-form-item label="用户名">
-              <el-input style="width:200px;" disabled :value="item.name?item.name:'猪猪'" type="text"/>
+              <el-input style="width:200px;" disabled :value="item.user.name?item.user.name:'猪猪'" type="text"/>
             </el-form-item>
             <el-form-item label="评论时间">
               <el-input style="width:200px;" disabled :value="item.createTime?item.createTime:'**:**'" type="text"/>

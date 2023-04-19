@@ -15,9 +15,10 @@
               </template>
               <el-link>
                 <el-avatar
-                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                  :src="image?image:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
                 />
               </el-link>
+              <input ref="uploadRef" type="file" @change="clickUploadImage" />
             </el-collapse-item>
             <el-collapse-item name="1">
               <template #title>
@@ -25,7 +26,7 @@
                   昵称:
                 </div>
               </template>
-              <el-input  placeholder="小草" :value="name?name:'小草'" />
+              <el-input  placeholder="小草" v-model="name" />
             </el-collapse-item>
             <el-collapse-item name="2">
               <template #title>
@@ -33,7 +34,7 @@
                   账号:
                 </div>
               </template>
-              <el-input width="50%" placeholder="231461564146" :value="username?username:'无'" />
+              <el-input width="50%" placeholder="231461564146" v-model="username" />
             </el-collapse-item>
             <el-collapse-item name="3">
               <template #title>
@@ -41,7 +42,7 @@
                   修改密码:
                 </div>
               </template>
-              <el-input type="password" placeholder="******" />
+              <el-input v-model="password" type="password" placeholder="******" />
             </el-collapse-item>
             <el-collapse-item name="4">
               <template #title>
@@ -49,7 +50,7 @@
                   绑定手机号:
                 </div>
               </template>
-              <el-input placeholder="231461564146" :value="phone?phone:'无'" />
+              <el-input placeholder="231461564146" v-model="phone" />
             </el-collapse-item>
             <el-collapse-item name="5">
               <template #title>
@@ -87,7 +88,7 @@
           content="点击这个按钮会提交你修改的信息哦"
         >
           <template #reference>
-            <el-button type="primary" @click="sumbitNewMessage">保存</el-button>
+            <el-button type="primary" @click="sumbitNewMessage">点击修改个人信息</el-button>
           </template>
         </el-popover>
         
@@ -99,10 +100,17 @@
 <script setup>
 import { ref,reactive } from 'vue';
 import useUserStore from '../../../store/user';
+import {uploadImage} from "../../../api/common"
+import {updatePwd} from "../../../api/user"
+import {ElNotification} from "element-plus"
+const uploadRef = ref()
 const userStore = useUserStore()
+
+let image = ref(userStore.image)
 let name = userStore.name
 let sex = userStore.sex
 let phone = userStore.phone
+let password = ref("****")
 let username = userStore.username
 const activeNames = ref(['9'])
 const handleChange = (val) => {
@@ -110,9 +118,26 @@ const handleChange = (val) => {
   console.log(val)
 }
 const sumbitNewMessage = ()=>{
-  
+  if(password.value!=="****"){
+    updatePwd(password.value).then(list=>{
+      console.log(list);
+    })
+  }
+  console.log(name,image.value,password.value);
 }
+// 上传图片事件
+const clickUploadImage = ()=>{
+  let file = uploadRef.value.files[0]
+  uploadImage(file).then(list=>{
+    ElNotification({
+      title:"上传图片成功",
+      message:"ohohoohohohoho!!!",
+      duration:2000
+    })
+    image.value = list.data.url
+  })
 
+}
 </script>
 <style scoped lang='scss'>
 .userSettings{

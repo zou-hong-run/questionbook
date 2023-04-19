@@ -121,7 +121,10 @@
   // 搜索框文字
   const searchVal = ref("")
   const inputChange = (inputVal)=>{
-  if(!inputVal){alert("搜索内容为空哦!");return;}
+    if(!inputVal){
+      alert("搜索内容为空哦!");
+      return;
+    }
     router.push("/search?inputval="+inputVal)
   }
   watch(route,(newRoute,oldRoute)=>{

@@ -49,3 +49,16 @@ export function myLike(){
     method:"get"
   })
 }
+/**
+ * 修改密码
+ * @returns 
+ */
+export function updatePwd(password){
+  return request({
+    url:"/user/updatePassword",
+    method:"get",
+    data:{
+      password
+    }
+  })
+}
