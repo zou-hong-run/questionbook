@@ -12,7 +12,7 @@
         <div>{{essayData?.createTime}}</div>
         <div>
           文章标签:
-          <el-button v-for="(item, index) in essayData?.types" :key="index" disabled>{{item.type}}</el-button>
+          <el-button plain type="primary" v-for="(item, index) in essayData?.types" :key="index" disabled>{{item.type}}</el-button>
         </div>
       </div>
       <el-scrollbar class="essayItem-left-content">
@@ -69,11 +69,11 @@
         相关文章推荐
       </div>
       <div class="essayItem-right-content">
-        <el-link href="/">手把手教你如何让网页跳转到首页</el-link>
-        <el-link href="/#/question">手把手教你如何让网页跳转到问题页面</el-link>
-        <el-link href="/#/essay">手把手教你如何让网页跳转到文章页面</el-link>
-        <el-link href="/#/game">手把手教你如何让网页跳转到游戏页面</el-link>
-        <el-link href="/#/question/addQuestion">手把手教你如何让网页跳转到提问页面</el-link>
+        <el-link class="essayItem-right-content-item" href="/">手把手教你如何让网页跳转到首页</el-link>
+        <el-link class="essayItem-right-content-item" href="/#/question">手把手教你如何让网页跳转到问题页面</el-link>
+        <el-link class="essayItem-right-content-item" href="/#/essay">手把手教你如何让网页跳转到文章页面</el-link>
+        <el-link class="essayItem-right-content-item" href="/#/game">手把手教你如何让网页跳转到游戏页面</el-link>
+        <el-link class="essayItem-right-content-item" href="/#/question/addQuestion">手把手教你如何让网页跳转到提问页面</el-link>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@
   import {getEssayContent,likeEssay,collectEssay,addEssayComment}  from "../../../api/essay"
   import { ElMessageBox,ElNotification } from 'element-plus'
   import useUserStore from '../../../store/user'
-import { getEssayCommentList } from '../../../api/essay'
+  import { getEssayCommentList } from '../../../api/essay'
   const userStore = useUserStore()
   const name = userStore.name
   const image = userStore.image
@@ -238,6 +238,11 @@ import { getEssayCommentList } from '../../../api/essay'
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      &-item{
+        width: 200px;
+        margin-bottom: 20px;
+        text-decoration: underline;
+      }
     }
   }
 }

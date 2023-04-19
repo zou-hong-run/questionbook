@@ -75,8 +75,8 @@
         <el-button>发送</el-button>
         <el-button @click="addCollectQuestion" type="default"><el-icon><Star /></el-icon>收藏</el-button>
         <el-button @click="addLikeQuestion" type="default"><el-icon><Pointer /></el-icon>点赞</el-button>
-        <el-button type="primary" disabled  >问题类型:</el-button>
-        <el-button  disabled  v-for="(item, index) in questionData?.types" :key="index">{{item.type}}</el-button>
+        <el-button text type="primary" disabled  >问题类型:</el-button>
+        <el-button plain type="info"  disabled  v-for="(item, index) in questionData?.types" :key="index">{{item.type}}</el-button>
       </div>
     </el-scrollbar>
     
