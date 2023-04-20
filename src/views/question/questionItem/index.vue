@@ -87,8 +87,11 @@ import {ref,reactive} from 'vue'
 import {useRoute,useRouter} from 'vue-router'
 import {collectQuestion,likeQuestion, getQuestionById} from "../../../api/question"
 import { ElMessageBox,ElNotification } from 'element-plus'
+import useUserStore from '../../../store/user';
+const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
+let name = userStore.name
 
 const questionData = ref()
 
@@ -114,6 +117,12 @@ getQuestionById(questionId).then(list=>{
 // const html = ref('<h1 style="text-align: center;">我是文章标题内容哦</h1><h1 style="text-align: center;">我是文章标题内容哦</h1><h1 style="text-align: center;">我是文章标题内容哦</h1><h1 style="text-align: center;">我是文章标题内容哦</h1><h1 style="text-align: center;">我是文章标题内容哦</h1><h1 style="text-align: center;">我是文章标题内容哦</h1><h1 style="text-align: center;">我是文章标题内容哦</h1><hr/><p>我是你要输入的文章哦!</p><p>同时我也支持markdown语法哦!</p><ul><li style="text-align: left;">标题</li><li style="text-align: left;">列表 - + *</li><li style="text-align: left;">引用 &gt;</li><li style="text-align: left;">分割线 ---</li><li style="text-align: left;">代码块 ```js</li></ul><p style="text-align: left;">开始写作吧!!!!!!</p>')
 // 用户输入框
 const inputVal = ref('')
+// 消息框对象
+const questionItemContentRef = ref()
+// 消息左边元素
+const contentItemLeftRef = ref()
+// 消息右边元素
+const contentItemRightRef = ref()
 // 给用户提示
 const showNotification = (type)=>{
   ElNotification({
@@ -153,39 +162,37 @@ const addLikeQuestion = ()=>{
 }
 // 发送消息
 const sendMessage = ()=>{
-  if(!inputVal){alert("不能发送为空的消息");return;}
+  if(!inputVal.value){alert("不能发送为空的消息");return;}
+
+  const message = inputVal.value
+  const name = userStore.name
+
+  // 消息容器
+  const questionItemContentElement = questionItemContentRef.value
+  // 左边消息
+  const contentItemLeftElement = contentItemLeftRef.value.cloneNode(true)
+  // const contentItemRightElement = contentItemRightRef.value
+  // 左边消息 用户,内容
+  const leftNameElement = contentItemLeftElement.querySelector(".questionItem-content-left-username")
+  const leftContentElement = contentItemLeftElement.querySelector(".questionItem-content-left-content")
+  // const RightNameElement = contentItemRightElement.querySelector(".questionItem-content-right-username")
   
+  leftNameElement.innerHTML = name
+  leftContentElement.innerHTML = message
+  // 向消息容器中插入元素
+  questionItemContentElement.appendChild(contentItemLeftElement)
+  
+  // questionItemContentElement.appendChild(`<div class="questionItem-content-left">
+  //           <div class="questionItem-content-left-username">${name}</div>
+  //           <div class="questionItem-content-left-content">
+  //             <div v-if="true">${message}</div>
+  //             <img v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
+  //           </div>
+  //         </div>`)
 }
 </script>
 <template>
-  <div class="questionItem">
-    <el-scrollbar class="questionItem-title">
-      <!-- <div v-html="html"></div> -->
-      <div v-html="questionData?.data"></div>
-    </el-scrollbar>
-    <div class="questionItem-content">
-      <el-scrollbar height="calc(100%)" >
-        <div class="questionItem-content-itemcontent">
-          <div class="questionItem-content-left">
-            <div class="questionItem-content-left-username">小草</div>
-            <div class="questionItem-content-left-content">
-              <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
-              <div v-else>
-                <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
-              </div>
-            </div>
-          </div>
-          <div class="questionItem-content-right">
-            <div class="questionItem-content-right-username">小花</div>
-            <div class="questionItem-content-right-content">
-              <div v-if="false">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
-              <div v-else>
-                <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
-              </div>
-            </div>
-          </div>
-  
-          <div class="questionItem-content-right">
+   <!-- <div class="questionItem-content-right">
             <div class="questionItem-content-right-username">小花</div>
             <div class="questionItem-content-right-content">
               <div v-if="false">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
@@ -216,7 +223,37 @@ const sendMessage = ()=>{
               <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
               <img v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
             </div>
+          </div> -->
+  <div class="questionItem">
+    <el-scrollbar class="questionItem-title">
+      <!-- <div v-html="html"></div> -->
+      <div v-html="questionData?.data"></div>
+    </el-scrollbar>
+    <div class="questionItem-content">
+      <el-scrollbar height="calc(100%)" >
+        <div class="questionItem-content-itemcontent" ref="questionItemContentRef">
+          
+         
+          <div ref="contentItemLeftRef" class="questionItem-content-left">
+            <div class="questionItem-content-left-username">小草</div>
+            <div class="questionItem-content-left-content">
+              <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
+              <div v-else>
+                <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
+              </div>
+            </div>
           </div>
+          <div ref="contentItemRightRef" class="questionItem-content-right">
+            <div class="questionItem-content-right-username">小花</div>
+            <div class="questionItem-content-right-content">
+              <div v-if="false">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
+              <div v-else>
+                <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
+              </div>
+            </div>
+          </div>
+  
+
         </div>
           
       </el-scrollbar>
@@ -226,6 +263,7 @@ const sendMessage = ()=>{
         <el-button ><el-icon><CirclePlus /></el-icon></el-button>
         <el-input
           v-model="inputVal"
+          @change="sendMessage"
           :autosize="{ minRows: 2, maxRows: 4 }"
           type="input"
           placeholder="尽情讨论吧!"
