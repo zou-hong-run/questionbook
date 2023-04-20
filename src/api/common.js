@@ -12,4 +12,15 @@ export function uploadImage(file){
     }
   })
 }
+// 搜搜
+export function search(title){
+  console.log(title);
+  return request({
+    url:"/search",
+    method:"get",
+    params:{
+      title
+    }
+  })
+}
 

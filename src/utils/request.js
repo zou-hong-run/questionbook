@@ -34,6 +34,7 @@ service.interceptors.request.use(config=>{
     url = url.slice(0,-1);
     config.params = {}
     config.url = url
+    console.log(config.url,"???");
   }
   // 不需要重复提交才进入
   if(!isRepeatSumbit && (config.method === 'post' || config.method === 'put')){

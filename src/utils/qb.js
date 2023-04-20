@@ -7,6 +7,7 @@
 export function transParams(params){
   let result = ''
   for(const propName of Object.keys(params)){
+    // propNam=>key
     const value = params[propName];// 拿到值
     let part = encodeURIComponent(propName)+"=";
     if(value !== null && typeof (value) !=="undefined"){
@@ -18,9 +19,9 @@ export function transParams(params){
             result += subPart + encodeURIComponent(value[key])+"&";
           }
         }
+      }else{
+        result += part+encodeURIComponent(value)+"&";
       }
-    }else{
-      result += part+encodeURIComponent(value)+"&";
     }
   }
   return result;

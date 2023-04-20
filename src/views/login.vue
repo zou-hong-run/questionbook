@@ -1,118 +1,3 @@
-<template>
-  <div class="login">
-    <el-form status-icon v-show="isLoginOrRegister" ref="ruleLoginFormRef" :model="loginFormItem" :rules="loginRules" class="login-form">
-      <el-row>
-        <el-col class="chooseCol" :span="12" align="middle">
-          <el-button class="chooseBtn" @click="isLoginOrRegister=true" text :type="`${isLoginOrRegister?'success':'default'}`">登录</el-button>
-        </el-col>
-        <el-col class="chooseCol" :span="12" align="middle">
-          <el-button class="chooseBtn" @click="isLoginOrRegister=false" text :type="`${isLoginOrRegister?'default':'success'}`">注册</el-button>
-        </el-col>
-      </el-row>
-      <!-- 用户名 -->
-      <el-form-item class="formItem" prop="username">
-        <el-input clearable  v-model="loginFormItem.username" placeholder="请输入用户名" name="username">
-          <template #prepend>
-            <el-button icon="User" />
-          </template>
-        </el-input>
-      </el-form-item>
-      <!-- 密码 -->
-      <el-form-item class="formItem" prop="password">
-        <el-input clearable  v-model="loginFormItem.password" placeholder="请输入密码">
-          <template #prepend>
-            <el-button icon="Lock" />
-          </template>
-        </el-input>
-      </el-form-item>
-      <!-- 验证码 -->
-      <el-form-item class="formItem" prop="code">
-        <el-input @keyup.enter="loginSubmitForm(ruleLoginFormRef)" clearable  style="width: 63%" v-model="loginFormItem.code" placeholder="验证码" class="input-with-select">
-          <template #prepend>
-            <el-button icon="Message" />
-          </template>
-        </el-input>
-        <div @click="getCode" class="login-code">
-          <el-image :src="codeUrl" fit="cover" class="login-code-img" />
-        </div>
-
-      </el-form-item>
-      <!-- 登录按钮 -->
-      <el-form-item class="formItem">
-        <el-button @click="loginSubmitForm(ruleLoginFormRef)" :loading="loginLoading" size="large" type="primary" style="width:100%;">
-          <span v-if="!loginLoading">登 录</span>
-          <span v-else>登 录 中...</span>
-        </el-button>
-      </el-form-item>
-      <!-- // 分割线 -->
-      <el-divider class="formItem">
-        <el-text size="small">其他方式登录</el-text>
-      </el-divider>
-      <!-- 其他登录方式 -->
-      <el-row class="formItem">
-        <el-col v-for="(item, index) in pics" :key="index" :span="8" style="display:flex;justify-content: center;align-items: center;">
-          <el-image style="width: 30px; height: 30px" :src="item" fit="cover" />
-        </el-col>
-      </el-row>
-      <!-- 注册跳转 -->
-      <el-row class="formItem">
-        <el-text @click="isLoginOrRegister=false" type="primary">立即注册</el-text>
-      </el-row>
-      <el-text class="formItem" size="small">登录即代表同意 服务条款 和 隐私协议</el-text>
-    </el-form>
-
-    <el-form  status-icon v-show="!isLoginOrRegister" ref="ruleRegisterFormRef" :model="registerFormItem" :rules="registerRules" class="register-form">
-      <el-row>
-        <el-col class="chooseCol" :span="12" align="middle">
-          <el-button class="chooseBtn" @click="isLoginOrRegister=true" text :type="`${isLoginOrRegister?'success':'default'}`">登录</el-button>
-        </el-col>
-        <el-col class="chooseCol" :span="12" align="middle">
-          <el-button class="chooseBtn" @click="isLoginOrRegister=false" text :type="`${isLoginOrRegister?'default':'success'}`">注册</el-button>
-        </el-col>
-      </el-row>
-      <!-- 用户名 -->
-      <el-form-item class="formItem" prop="username">
-        <el-input clearable  v-model="registerFormItem.username" placeholder="请输入用户名" name="username">
-          <template #prepend>
-            <el-button icon="User" />
-          </template>
-        </el-input>
-      </el-form-item>
-      <!-- 密码 -->
-      <el-form-item class="formItem" prop="password">
-        <el-input clearable  v-model="registerFormItem.password" placeholder="请输入密码">
-          <template #prepend>
-            <el-button icon="Lock" />
-          </template>
-        </el-input>
-      </el-form-item>
-      <!-- 确认密码 -->
-      <el-form-item class="formItem" prop="rePassword">
-        <el-input clearable  v-model="registerFormItem.rePassword" placeholder="确认密码">
-          <template #prepend>
-            <el-button icon="Lock" />
-          </template>
-        </el-input>
-      </el-form-item>
-      <el-form-item class="formItem" prop="type">
-        <el-form-item prop="type">
-          <el-switch v-model="registerFormItem.type" />
-          <el-text style="margin-left:7px;" type="primary">注册即同意用户协议</el-text>
-        </el-form-item>
-      </el-form-item>
-      <el-form-item class="formItem" style="width:100%;">
-        <el-button @click="registerSubmitForm(ruleRegisterFormRef)" :loading="registerLoading" size="large" type="primary" style="width:100%;">
-          <span v-if="!registerLoading">注 册</span>
-          <span v-else>注 册 中...</span>
-        </el-button>
-      </el-form-item>
-      <!-- 登录跳转 -->
-      <el-row class="formItem">
-        <el-text @click="isLoginOrRegister=true" type="primary">立即登录</el-text>
-      </el-row>
-    </el-form>
-  </div>
-</template>
 <style scoped lang='scss'>
   .login {
     width: 100%;
@@ -175,6 +60,8 @@
     }
   }
 </style>
+
+
 
 <script  setup>
 import { reactive, ref,watch } from 'vue'
@@ -369,3 +256,118 @@ function getCode(){
 }
 getCode()
 </script>
+<template>
+  <div class="login">
+    <el-form status-icon v-show="isLoginOrRegister" ref="ruleLoginFormRef" :model="loginFormItem" :rules="loginRules" class="login-form">
+      <el-row>
+        <el-col class="chooseCol" :span="12" align="middle">
+          <el-button class="chooseBtn" @click="isLoginOrRegister=true" text :type="`${isLoginOrRegister?'success':'default'}`">登录</el-button>
+        </el-col>
+        <el-col class="chooseCol" :span="12" align="middle">
+          <el-button class="chooseBtn" @click="isLoginOrRegister=false" text :type="`${isLoginOrRegister?'default':'success'}`">注册</el-button>
+        </el-col>
+      </el-row>
+      <!-- 用户名 -->
+      <el-form-item class="formItem" prop="username">
+        <el-input clearable  v-model="loginFormItem.username" placeholder="请输入用户名" name="username">
+          <template #prepend>
+            <el-button icon="User" />
+          </template>
+        </el-input>
+      </el-form-item>
+      <!-- 密码 -->
+      <el-form-item class="formItem" prop="password">
+        <el-input clearable  v-model="loginFormItem.password" placeholder="请输入密码">
+          <template #prepend>
+            <el-button icon="Lock" />
+          </template>
+        </el-input>
+      </el-form-item>
+      <!-- 验证码 -->
+      <el-form-item class="formItem" prop="code">
+        <el-input @keyup.enter="loginSubmitForm(ruleLoginFormRef)" clearable  style="width: 63%" v-model="loginFormItem.code" placeholder="验证码" class="input-with-select">
+          <template #prepend>
+            <el-button icon="Message" />
+          </template>
+        </el-input>
+        <div @click="getCode" class="login-code">
+          <el-image :src="codeUrl" fit="cover" class="login-code-img" />
+        </div>
+
+      </el-form-item>
+      <!-- 登录按钮 -->
+      <el-form-item class="formItem">
+        <el-button @click="loginSubmitForm(ruleLoginFormRef)" :loading="loginLoading" size="large" type="primary" style="width:100%;">
+          <span v-if="!loginLoading">登 录</span>
+          <span v-else>登 录 中...</span>
+        </el-button>
+      </el-form-item>
+      <!-- // 分割线 -->
+      <el-divider class="formItem">
+        <el-text size="small">其他方式登录</el-text>
+      </el-divider>
+      <!-- 其他登录方式 -->
+      <el-row class="formItem">
+        <el-col v-for="(item, index) in pics" :key="index" :span="8" style="display:flex;justify-content: center;align-items: center;">
+          <el-image style="width: 30px; height: 30px" :src="item" fit="cover" />
+        </el-col>
+      </el-row>
+      <!-- 注册跳转 -->
+      <el-row class="formItem">
+        <el-text @click="isLoginOrRegister=false" type="primary">立即注册</el-text>
+      </el-row>
+      <el-text class="formItem" size="small">登录即代表同意 服务条款 和 隐私协议</el-text>
+    </el-form>
+
+    <el-form  status-icon v-show="!isLoginOrRegister" ref="ruleRegisterFormRef" :model="registerFormItem" :rules="registerRules" class="register-form">
+      <el-row>
+        <el-col class="chooseCol" :span="12" align="middle">
+          <el-button class="chooseBtn" @click="isLoginOrRegister=true" text :type="`${isLoginOrRegister?'success':'default'}`">登录</el-button>
+        </el-col>
+        <el-col class="chooseCol" :span="12" align="middle">
+          <el-button class="chooseBtn" @click="isLoginOrRegister=false" text :type="`${isLoginOrRegister?'default':'success'}`">注册</el-button>
+        </el-col>
+      </el-row>
+      <!-- 用户名 -->
+      <el-form-item class="formItem" prop="username">
+        <el-input clearable  v-model="registerFormItem.username" placeholder="请输入用户名" name="username">
+          <template #prepend>
+            <el-button icon="User" />
+          </template>
+        </el-input>
+      </el-form-item>
+      <!-- 密码 -->
+      <el-form-item class="formItem" prop="password">
+        <el-input clearable  v-model="registerFormItem.password" placeholder="请输入密码">
+          <template #prepend>
+            <el-button icon="Lock" />
+          </template>
+        </el-input>
+      </el-form-item>
+      <!-- 确认密码 -->
+      <el-form-item class="formItem" prop="rePassword">
+        <el-input clearable  v-model="registerFormItem.rePassword" placeholder="确认密码">
+          <template #prepend>
+            <el-button icon="Lock" />
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item class="formItem" prop="type">
+        <el-form-item prop="type">
+          <el-switch v-model="registerFormItem.type" />
+          <el-text style="margin-left:7px;" type="primary">注册即同意用户协议</el-text>
+        </el-form-item>
+      </el-form-item>
+      <el-form-item class="formItem" style="width:100%;">
+        <el-button @click="registerSubmitForm(ruleRegisterFormRef)" :loading="registerLoading" size="large" type="primary" style="width:100%;">
+          <span v-if="!registerLoading">注 册</span>
+          <span v-else>注 册 中...</span>
+        </el-button>
+      </el-form-item>
+      <!-- 登录跳转 -->
+      <el-row class="formItem">
+        <el-text @click="isLoginOrRegister=true" type="primary">立即登录</el-text>
+      </el-row>
+    </el-form>
+  </div>
+</template>

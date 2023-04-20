@@ -1,74 +1,4 @@
-<template>
-  <div class="messages">
-    <div class="messages-left">
-      <el-avatar :size="80" :src="circleUrl" />
-      <h1>{{name}}</h1>
-      <p>{{phone}}</p>
-      <el-link type="success" href="#/userinfo/questions">个人主页</el-link>
-    </div>
-    <div class="messages-right">
-      <el-tabs type="border-card"  @tab-click="tableClick" >
-        <!-- <el-tab-pane label="全部">
-          <el-scrollbar height="70vh">
-            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in 20" :key="index">
-              <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
-              <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
-                <el-descriptions-item label="时间:">2023年4月5日19:17:10</el-descriptions-item>
-                <el-descriptions-item label="文章标题:">干红干好噶化工爱过哈 嘎嘎</el-descriptions-item>
-                <el-descriptions-item label="评论了:">
-                  你小子找茬啊
-                </el-descriptions-item>
-              </el-descriptions>
-            </el-link>
-          </el-scrollbar>
-        </el-tab-pane> -->
 
-        <el-tab-pane label="点赞">
-          <el-scrollbar height="70vh">
-            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in likeMeList" :key="item.id">
-              <el-avatar style="margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
-              <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
-                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
-                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
-                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
-              </el-descriptions>
-            </el-link>
-          </el-scrollbar>
-        </el-tab-pane>
-
-        <el-tab-pane label="收藏">
-          <el-scrollbar height="70vh">
-            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in collectMeList" :key="item.id">
-              <el-avatar style="margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
-              <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
-                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
-                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
-                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
-              </el-descriptions>
-            </el-link>
-          </el-scrollbar>
-        </el-tab-pane>
-
-        <el-tab-pane label="评论">
-          <el-scrollbar height="70vh">
-            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in commentMeList" :key="item.id">
-              <el-avatar style="margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
-              <el-descriptions :column="1">
-                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
-                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
-                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
-                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
-              </el-descriptions>
-            </el-link>
-          </el-scrollbar>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-  </div>
-</template>
 
 <script setup>
 import {ref} from 'vue';
@@ -113,6 +43,77 @@ function tableClick(data){
 }
 
 </script>
+<template>
+  <div class="messages">
+    <div class="messages-left">
+      <el-avatar :size="80" :src="circleUrl" />
+      <h1>{{name}}</h1>
+      <p>{{phone}}</p>
+      <el-link type="success" href="#/userinfo/questions">个人主页</el-link>
+    </div>
+    <div class="messages-right">
+      <el-tabs type="border-card"  @tab-click="tableClick" >
+        <!-- <el-tab-pane label="全部">
+          <el-scrollbar height="70vh">
+            <el-link href="https://element-plus.org" target="_blank" class="messages-right-item" v-for="(item, index) in 20" :key="index">
+              <el-avatar style="margin-right:20px;" :size="80" :src="circleUrl" />
+              <el-descriptions :column="1">
+                <el-descriptions-item label="用户名:">夏草</el-descriptions-item>
+                <el-descriptions-item label="时间:">2023年4月5日19:17:10</el-descriptions-item>
+                <el-descriptions-item label="文章标题:">干红干好噶化工爱过哈 嘎嘎</el-descriptions-item>
+                <el-descriptions-item label="评论了:">
+                  你小子找茬啊
+                </el-descriptions-item>
+              </el-descriptions>
+            </el-link>
+          </el-scrollbar>
+        </el-tab-pane> -->
+
+        <el-tab-pane label="点赞">
+          <el-scrollbar height="70vh">
+            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in likeMeList" :key="item.id">
+              <el-avatar style="width:250px;margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
+              <el-descriptions :column="1">
+                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
+                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
+                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
+              </el-descriptions>
+            </el-link>
+          </el-scrollbar>
+        </el-tab-pane>
+
+        <el-tab-pane label="收藏">
+          <el-scrollbar height="70vh">
+            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in collectMeList" :key="item.id">
+              <el-avatar style="width:250px;margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
+              <el-descriptions :column="1">
+                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
+                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
+                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
+              </el-descriptions>
+            </el-link>
+          </el-scrollbar>
+        </el-tab-pane>
+
+        <el-tab-pane label="评论">
+          <el-scrollbar height="70vh">
+            <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in commentMeList" :key="item.id">
+              <el-avatar style="width:250px;margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
+              <el-descriptions :column="1">
+                <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
+                <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
+                <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
+              </el-descriptions>
+            </el-link>
+          </el-scrollbar>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+  </div>
+</template>
 <style scoped lang='scss'>
 .messages{
   width: 100%;
