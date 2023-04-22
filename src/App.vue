@@ -10,6 +10,7 @@
   </transition> -->
 </template>
 <style lang="scss">
+
 .slide-fade {
   position: fixed;
   left: 0;

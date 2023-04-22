@@ -5,7 +5,7 @@ import ElementPlus from "element-plus"
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './assets/styles/wangedit.css'
-
+import 'animate.css';
 import "./permission"
 
 

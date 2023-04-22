@@ -1,84 +1,84 @@
 <style scoped lang='scss'>
-.questionItem{
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  .questionItem-title{
-    padding: 10px;
-    width: calc(100% - 20px);
-    height: calc(70% - 20px);
-    border: 1px solid #fff;
-    background-color: #F4F7FE;
-  }
-  .questionItem-content{
-    width: calc(100% - 20px);
-    height: calc(30% - 70px);
-    padding: 10px;
-    background: #ffffff;
-    &-itemcontent{
-      background-color: #fff;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    // 左右聊天项共有属性
-    &-left,&-right{
-      user-select: all;
-      margin-bottom: 10px ;
-      height: auto;
-      // 聊天框宽度 占据70%
-      width: auto;
-      max-width:300px;
-      background-color: #f5f6f8;
-      padding: 15px;
-      // 用户姓名
-      &-username{
-        width: auto;
-        color: black;
-        //background-color: #532f2f;
-        font-size: 5px;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-      // 用户发的消息
-      &-content{
-        max-width:300px;
-        color: skyblue;
-        //background-color: #052046;
-        font-size: 10px;
-        img{
-          width: 150px;
-          height: 150px;
-        }
-      }
-    }
-    // 右边特有属性
-    &-right{
-      align-self: end;
-      text-align: right;
-      width: fit-content;
-      &-content{
-        text-align: left;
-        display: flex;
-        flex-direction: row-reverse;
-        img{
-          width: 150px;
-          height: 150px;
-        }
-      }
-    }
-
-  }
-  .questionItem-bottom{
-    border-top: 1px solid #ccc;
+  .questionItem{
     width: 100%;
-    height:46px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: end ;
-    background-color: #F4F7FE;
-  }
+    height: 100%;
+    background-color: #fff;
+    .questionItem-title{
+      padding: 10px;
+      width: calc(100% - 20px);
+      height: calc(70% - 20px);
+      border: 1px solid #fff;
+      background-color: #F4F7FE;
+    }
+    .questionItem-content{
+      width: calc(100% - 20px);
+      height: calc(30% - 70px);
+      padding: 10px;
+      background: #ffffff;
+      &-itemcontent{
+        background-color: #fff;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      // 左右聊天项共有属性
+      &-left,&-right{
+        user-select: all;
+        margin-bottom: 10px ;
+        height: auto;
+        // 聊天框宽度 占据70%
+        width: auto;
+        max-width:300px;
+        background-color: #f5f6f8;
+        padding: 15px;
+        // 用户姓名
+        &-username{
+          width: auto;
+          color: black;
+          //background-color: #532f2f;
+          font-size: 5px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        // 用户发的消息
+        &-content{
+          max-width:300px;
+          color: skyblue;
+          //background-color: #052046;
+          font-size: 10px;
+          img{
+            width: 150px;
+            height: 150px;
+          }
+        }
+      }
+      // 右边特有属性
+      &-right{
+        align-self: end;
+        text-align: right;
+        width: fit-content;
+        &-content{
+          text-align: left;
+          display: flex;
+          flex-direction: row-reverse;
+          img{
+            width: 150px;
+            height: 150px;
+          }
+        }
+      }
+
+    }
+    .questionItem-bottom{
+      border-top: 1px solid #ccc;
+      width: 100%;
+      height:46px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: end ;
+      background-color: #F4F7FE;
+    }
 }
 </style>
 
@@ -160,6 +160,8 @@ const addLikeQuestion = ()=>{
   likeQuestion(questionId)
   showNotification("点赞")
 }
+// 滚动条
+const scrollbarRef = ref()
 // 发送消息
 const sendMessage = ()=>{
   if(!inputVal.value){alert("不能发送为空的消息");return;}
@@ -181,6 +183,8 @@ const sendMessage = ()=>{
   leftContentElement.innerHTML = message
   // 向消息容器中插入元素
   questionItemContentElement.appendChild(contentItemLeftElement)
+  // 滚动条 到底部
+  scrollbarRef.value?.setScrollTop(questionItemContentRef.value.scrollHeight)
   
   // questionItemContentElement.appendChild(`<div class="questionItem-content-left">
   //           <div class="questionItem-content-left-username">${name}</div>
@@ -230,11 +234,11 @@ const sendMessage = ()=>{
       <div v-html="questionData?.data"></div>
     </el-scrollbar>
     <div class="questionItem-content">
-      <el-scrollbar height="calc(100%)" >
-        <div class="questionItem-content-itemcontent" ref="questionItemContentRef">
+      <el-scrollbar height="calc(100%)" ref="scrollbarRef">
+        <div class="questionItem-content-itemcontent animate__animated animate__shakeX" ref="questionItemContentRef">
           
          
-          <div ref="contentItemLeftRef" class="questionItem-content-left">
+          <div ref="contentItemLeftRef" class="questionItem-content-left animate__animated animate__backInRight">
             <div class="questionItem-content-left-username">小草</div>
             <div class="questionItem-content-left-content">
               <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
