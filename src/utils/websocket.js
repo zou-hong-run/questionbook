@@ -1,81 +1,61 @@
-//暴露自定义websocket对象
-export const socket = {
-  //后台请求路径
-  url: "",
-  //websocket对象
-  websocket: null,
-  //websocket状态
-  websocketState: false,
-  //重新连接次数
-  reconnectNum: 0,
-  //重连锁状态，保证重连按顺序执行
-  lockReconnect: false,
-  //定时器信息
-  timeout: null,
-  clientTimeout: null,
-  serverTimeout: null,
-  //初始化方法，根据url创建websocket对象封装基本连接方法，并重置心跳检测
-  initWebSocket(newUrl) {
-    socket.url = newUrl;
-    socket.websocket = new WebSocket(socket.url);
-    socket.websocket.onopen = socket.websocketOnOpen;
-    socket.websocket.onerror = socket.websocketOnError;
-    socket.websocket.onclose = socket.websocketOnClose;
-    this.resetHeartbeat()
-  },
-  reconnect() {
-    //判断连接状态
-    if (socket.lockReconnect) return;
-    socket.reconnectNum += 1;
-    //重新连接三次还未成功调用连接关闭方法
-    if (socket.reconnectNum === 3) {
-      socket.reconnectNum = 0;
-      socket.websocket.onclose()
-      return;
-    }
-    //等待本次重连完成后再进行下一次
-    socket.lockReconnect = true;
-    //5s后进行重新连接
-    socket.timeout = setTimeout(() => {
-      socket.initWebSocket(socket.url);
-      socket.lockReconnect = false;
-    }, 5000);
-  },
-  //重置心跳检测
-  resetHeartbeat() {
-    socket.heartbeat();
-  },
-  //心跳检测
-  heartbeat() {
-    socket.clientTimeout = setTimeout(() => {
-      if (socket.websocket) {
-        //向后台发送消息进行心跳检测
-        socket.websocket.send(JSON.stringify({ type: "heartbeat" }));
-        socket.websocketState = false;
-        //一分钟内服务器不响应则关闭连接
-        socket.serverTimeout = setTimeout(() => {
-          if (!socket.websocketState) {
-            socket.websocket.onclose()
-          } else {
-            this.resetHeartbeat()
-          }
-        }, 60 * 1000);
-      }
-    }, 3 * 1000);
-  },
-  //发送消息
-  sendMsg(message) {
-    socket.websocket.send(message);
-  },
-  websocketOnOpen(event) {
-    //连接开启后向后台发送消息进行一次心跳检测
-    socket.sendMsg(JSON.stringify({ type: "heartbeat" }));
-  },
-  websocketOnError(error) {
-    console.log("socket"+error);
-    socket.reconnect();
-  },
-  websocketOnClose() {
-    socket.websocket.close();
-  },
+import useUserStore from "../store/user";
+
+const userStore = useUserStore()
+// const token = encodeURIComponent(userStore.token)
+// const ws = new WebSocket("ws://10.10.62.63:6060/websocket",[token]);
+let globalCallback = null
+function initWebsocket(){
+  this.url = "ws://10.10.62.63:6060/websocket"
+  this.token = encodeURIComponent(userStore.token)
+  this.websocket = new WebSocket(this.url,[token]);
+  this.websocket.onopen = (e)=>{
+    this.onopen(e)
+  }
+  this.websocket.onmessage = (e)=>{
+    this.onmessage(e)
+  }
+  this.websocket.onclose = (e)=>{
+    this.onclose(e)
+  }
+  this.websocket.onerror = (err)=>{
+    this.onerror(e)
+  }
+}
+initWebsocket.prototype.onopen = function(e){
+  console.log("open");
+}
+initWebsocket.prototype.onmessage = function(e){
+  const data = JSON.parse(e.data)
+  if(globalCallback){
+    globalCallback(data);
+  }
+}
+initWebsocket.prototype.send = function(data){
+  this.websocket.send(JSON.stringify(data))
+  if(globalCallback){
+    globalCallback(data)
+  }
+}
+
+initWebsocket.prototype.onclose = function(e){
+  console.log("close");
+}
+initWebsocket.prototype.onerror = function(err){
+  console.log("error",err)
+}
+function sendSocket(data,callback){
+  globalCallback = callback
+  initWebsocket.send(data)
+}
+let client = null
+const connectSocket = ()=>{
+  if(client){
+    return client
+  }else{
+    client = new initWebsocket()
+  }
+}
+export default{
+  connectSocket,
+  sendSocket
 };
