@@ -40,27 +40,18 @@
       </div>
       
       <el-scrollbar class="essayItem-left-comment">
-        <div v-for="(item, index) in contentData" :key="index" style="background:#F5F6F8;margin:40px;border-bottom:1px solid #ccc;">
-          <el-form
-            status-icon
-            label-width="100px"
-          >
-            <el-form-item label="头像">
-              <el-avatar
-                :src="item.user.image?item.user.image:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
-              />
-            </el-form-item>
-            <el-form-item label="用户名">
-              <el-input style="width:200px;" disabled :value="item.user.name?item.user.name:'猪猪'" type="text"/>
-            </el-form-item>
-            <el-form-item label="评论时间">
-              <el-input style="width:200px;" disabled :value="item.createTime?item.createTime:'**:**'" type="text"/>
-            </el-form-item>
-            <el-form-item label="评论内容">
-              <el-input style="width:700px;" disabled :value="item.data?item.data:'好牛哇,学到了很多'" type="textarea"/>
-            </el-form-item>
-          </el-form>
-          
+        <div v-for="(item, index) in contentData" :key="index"
+         style="background:#F5F6F8;margin:40px;padding:40px;border-bottom:1px solid #ccc;">
+          <div style="height:60px;display:flex;justify-content: left;align-items: center;">
+            <el-avatar
+              :src="item.user.image?item.user.image:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
+            />
+            <el-button plain>{{item.user.name?item.user.name:'猪猪'}}</el-button>
+            <el-button type="info" plain>{{item.createTime?item.createTime:'**:**'}}</el-button>
+          </div>
+          <div style="width:80%;">
+            <el-input :rows="2" disabled :value="item.data?item.data:'好牛哇,学到了很多'" type="textarea"/> 
+          </div>
         </div>
       </el-scrollbar>
     </div>

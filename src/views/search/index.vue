@@ -35,15 +35,25 @@
 <script setup>
 import {ref,watch} from 'vue'
 import {useRoute,useRouter} from "vue-router"
+import { ElNotification } from 'element-plus'
 import {search} from '@/api/common'
 const route = useRoute()
 const router = useRouter() 
 const inputVal = ref("")
-const searchQuestionsItem = ref(null)
-const searchEssaysItem = ref(null)
+const searchQuestionsItem = ref([])
+const searchEssaysItem = ref([])
 const getSearchItem = ()=>{
+  if(!inputVal.value){
+    ElNotification({
+      title:"你没有输入任何数据",
+      message: 'nothing!',
+      duration:2500
+    })
+  }
+
   // console.log(inputVal.value);
   search(inputVal.value).then(list=>{
+    console.log(list);
     const {questions,texts} = list.data
     searchQuestionsItem.value = questions
     searchEssaysItem.value = texts

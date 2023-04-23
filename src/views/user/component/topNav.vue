@@ -33,9 +33,11 @@
   const userStore = useUserStore()
   // console.log(userStore);
   let username = userStore.name
+  let id = userStore.id
+  let image = userStore.image
   const route = useRoute()
   const router = useRouter()
-  const circleUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+  const circleUrl = ref(image?image:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
 
   const tableItems = reactive([
       {

@@ -101,13 +101,13 @@
 import { ref,reactive } from 'vue';
 import useUserStore from '../../../store/user';
 import {uploadImage} from "../../../api/common"
-import {updatePwd} from "../../../api/user"
+import {updatePwd,updateUser} from "../../../api/user"
 import {ElNotification} from "element-plus"
 const uploadRef = ref()
 const userStore = useUserStore()
 
 let image = ref(userStore.image)
-let name = userStore.name
+let name = ref(userStore.name)
 let sex = userStore.sex
 let phone = userStore.phone
 let password = ref("****")
@@ -123,7 +123,17 @@ const sumbitNewMessage = ()=>{
       console.log(list);
     })
   }
-  console.log(name,image.value,password.value);
+  // console.log(name,image.value,password.value);
+  updateUser(name.value,image.value).then(list=>{
+    // console.log(list.data);
+    ElNotification({
+      title:"成功",
+      message:"修改用户信息成功!!!",
+      duration:2500
+    })
+    window.location.href = "/#/usersettings"
+  })
+
 }
 // 上传图片事件
 const clickUploadImage = ()=>{

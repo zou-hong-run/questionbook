@@ -43,7 +43,7 @@
           <el-avatar
           :size="55"
           shape="square"
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          :src="image?image:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
         />
         <template #dropdown>
           <el-dropdown-menu>
@@ -75,8 +75,10 @@
   import { useRoute,useRouter } from "vue-router"
   import {ElMessageBox} from "element-plus"
   import useUserStore from "../../store/user"
+  
   const userStore = useUserStore()
 
+  let image = userStore.image
   const route = useRoute()
   const router = useRouter()
 

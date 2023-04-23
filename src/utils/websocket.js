@@ -3,11 +3,12 @@ import useUserStore from "../store/user";
 const userStore = useUserStore()
 // const token = encodeURIComponent(userStore.token)
 // const ws = new WebSocket("ws://10.10.62.63:6060/websocket",[token]);
-let globalCallback = null
+let globalCallback = [];
 function initWebsocket(){
-  this.url = "ws://10.10.62.63:6060/websocket"
+  this.url = "ws://43.143.237.123:6060/websocket"
+  // this.url = "ws://10.10.62.63:6060/websocket"
   this.token = encodeURIComponent(userStore.token)
-  this.websocket = new WebSocket(this.url,[token]);
+  this.websocket = new WebSocket(this.url,[this.token]);
   this.websocket.onopen = (e)=>{
     this.onopen(e)
   }
@@ -18,35 +19,46 @@ function initWebsocket(){
     this.onclose(e)
   }
   this.websocket.onerror = (err)=>{
-    this.onerror(e)
+    this.onerror(err)
   }
 }
 initWebsocket.prototype.onopen = function(e){
-  console.log("open");
+  console.log("open",e);
 }
 initWebsocket.prototype.onmessage = function(e){
+  if(e.data.includes("server")){
+    console.log("server",e.data,"不解析他");
+    return
+  }
   const data = JSON.parse(e.data)
-  if(globalCallback){
-    globalCallback(data);
+  if(globalCallback.length!==0){
+    globalCallback.forEach(func=>{
+      func(data)
+    })
   }
 }
-initWebsocket.prototype.send = function(data){
-  this.websocket.send(JSON.stringify(data))
-  if(globalCallback){
-    globalCallback(data)
+initWebsocket.prototype.onsend = function(data,func){
+  // 开启状态直接发送
+  if (this.websocket.readyState === this.websocket.OPEN) {
+    this.websocket.send(JSON.stringify(data))
+    // 正在开启状态，则等待1s后重新调用
+  } else if (this.websocket.readyState === this.websocket.CONNECTING) {
+    setTimeout(()=>{
+      this.websocket.send(JSON.stringify(data))
+    }, 1000)
+  }
+  if (func) {
+    globalCallback.push(func)
   }
 }
 
 initWebsocket.prototype.onclose = function(e){
-  console.log("close");
+  console.log("close",e);
 }
 initWebsocket.prototype.onerror = function(err){
   console.log("error",err)
 }
-function sendSocket(data,callback){
-  globalCallback = callback
-  initWebsocket.send(data)
-}
+
 let client = null
 const connectSocket = ()=>{
   if(client){
@@ -54,8 +66,7 @@ const connectSocket = ()=>{
   }else{
     client = new initWebsocket()
   }
+  // console.log(client);
+  return client
 }
-export default{
-  connectSocket,
-  sendSocket
-};
+export default connectSocket

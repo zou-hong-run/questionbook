@@ -62,3 +62,14 @@ export function updatePwd(password){
     }
   })
 }
+// 更新用户信息
+export function updateUser(name,image){
+  return request({
+    url:"/user/updateUser",
+    method:"post",
+    data:{
+      name,
+      image
+    }
+  })
+}

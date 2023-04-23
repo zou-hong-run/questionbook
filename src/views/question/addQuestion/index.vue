@@ -116,9 +116,14 @@ import {addQuestion} from "@/api/question"
 import useQuestionStore from '../../../store/question'
 import { ElNotification } from 'element-plus'
 import {useRoute,useRouter} from "vue-router"
+import connectSocket from "../../../utils/websocket"
+import useUserStore from '../../../store/user'
+const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const questionStore = useQuestionStore()
+const ws = connectSocket()
+
 
 // 获取文章分类
 let questionTypes = questionStore.category
@@ -387,6 +392,8 @@ const editorConfig = {
 // 对话框
 const centerDialogVisible = ref(false)
 const buttonVal = ref(null)
+// wbsocket
+
 // 提交文章
 function clickSumbitEssay(){
   if(!buttonVal.value){
@@ -433,8 +440,32 @@ function clickSumbitEssay(){
       message: 'ohohohohohohoh!!!!!!!!!',
       duration: 2000,
     })
-    let data = res.data
-    router.push(`/question/questionItem/${data}`)
+    // 问题ID
+    let questionId = res.data
+    let userId = userStore.id
+    // 发起连接请求数据格式
+    let data = {
+      data:{
+        "userId":{
+          name:userStore.name,
+        },
+        "toUserId":null,
+        "message":{title},
+        "flag":"question",
+        "questionId":questionId
+      }
+    }
+    // 回调函数接受返回的数据
+    const getSocketData = (data)=>{
+      const flag = data.flag
+      if(flag === "question"){
+        console.log("我发布问题了");
+      }
+    }
+    // 发送连接请求
+    ws.onsend(data,getSocketData)
+
+    router.push(`/question/questionItem/${questionId}`)
   })
 }
 // 设置文章类别

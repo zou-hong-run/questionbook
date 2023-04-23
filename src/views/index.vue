@@ -213,45 +213,45 @@
   import useQuestionStore from "../store/question"
   import useEssayStore from "../store/essay"
   import {useRoute,useRouter} from "vue-router"
+  import connectSocket from "../utils/websocket"
   const userStore = useUserStore()
   const route = useRoute()
   const router = useRouter()
-  // const { proxy } = getCurrentInstance();
-  // const io = proxy.$io
-  // console.log(io);
+  const userId = userStore.id
+  // 创建socket对象发起连接
+  let ws = connectSocket()
+  // 发起连接请求数据格式
+  let data = {
+    data:{
+      "userId": userId,
+      "toUserId":null,
+      "message":null,
+      "flag":"icon",
+      "questionId":null
+    }
+  }
+  // 回调函数接受返回的数据
+  const getSocketData = (res)=>{
+    // console.log("message",res.data);
+    if(!res.data)return;
+    const flag = res.data.flag
+    if(flag === 'icon'){
+      // 消息提示框
+      ElNotification({
+        title: '连接成功',
+        message: '世界聊天窗口连接成功!',
+        duration:2500
+      })
+    }else if(flag === "question"){
+      // console.log("有人发布问题了");
+      let title = res.data.message.title
+      let name = res.data.userId.name
+      addMessageItem(name,title)
+    }
+  }
+  // 发送连接请求
+  ws.onsend(data,getSocketData)
 
-  let token = 'Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzEzMjU2Mjk3fQ.gpzCbbiRNGHRlspIZ6hgssDpgTdiOUmkVSM5OZfMWLUU'
-  var ws = new WebSocket("ws://43.143.237.123:6060/websocket",[token]);
-  let userId = userStore.id
-  ws.onopen = function() {
-      // Web Socket 已连接上，使用 send() 方法发送数据
-      /*
-      {
-        data:{
-          "userId":1,
-          "toUserId":1,
-          "message":"dddd",
-          flag:"icon",
-          "quetionId":123
-        }
-      }
-      */
-     let data = {
-        "userId": userId,
-        "toUserId":null,
-        "message":null,
-        "flag":"icon",
-        "questionId":null
-        }
-      ws.send(data);
-      console.log('open');
-  };
-  ws.onmessage = function (e) { 
-    console.log('message', e.data);
-  };
-  ws.onclose = function() { 
-    console.log('close');
-  };
 
   const questionStore = useQuestionStore()
   const essayStore = useEssayStore()
@@ -274,7 +274,7 @@
   const discussionItemRightRef = ref()
   // 滚动条
   const scrollbarRef = ref()
-  const addMessageItem = ()=>{
+  const addMessageItem = (uName,UTitle)=>{
     
     // 评论容器元素
     const discussionItemContentElement = discussionItemContentRef.value
@@ -283,8 +283,8 @@
     let name = discussionItemRightElement.querySelector(".discussion-content-right-username")
     let content = discussionItemRightElement.querySelector(".discussion-content-right-content")
     // console.log(name,content);
-    name.innerHTML = userStore.name;
-    content.innerHTML = "嘎highOA黑暗hi庵后丢底牌;都会爱过后挂动环监控矮冬瓜"
+    name.innerHTML = uName;
+    content.innerHTML = UTitle
     discussionItemContentElement.appendChild(discussionItemRightElement)
 
     // 滚动条 到底部
@@ -306,9 +306,6 @@
 
     
   })
-
-  
-  
 
 
   window.addEventListener('error',function(e){
@@ -356,7 +353,7 @@
                   
                   <div class="hot-question-bottom">
                     <el-tag>{{item.solved===0?"未解决":"已解决"}}</el-tag>
-                    <el-tag type="info">{{999}}+人在线讨论</el-tag>
+                    <el-tag type="info">{{Math.floor(Math.random()*99)}}+人在线讨论</el-tag>
                     <el-image style="width: 20px; height: 20px" :src="embers" />
                   </div>
                 </div>
@@ -377,10 +374,6 @@
           <div class="hot-essay">
             <router-link style="" v-for="(item, index) in essayList" :key="item.id" :to="`/essay/essayItem/${item.id}`">
               <el-row style="border:5px solid #F5F6F8;">
-                <!-- 文字描述 -->
-                <!-- <el-descriptions style="margin:20px;" title="【开机启动】win11开机启动软件，win11开机启动bat脚本（开机启动vbs文件）">
-                  <el-descriptions-item label="css修改默认滚动条样式 antd修改滚动条样式"></el-descriptions-item>
-                </el-descriptions> -->
                 <el-descriptions style="margin:20px;" :title="item.title">
                   <el-descriptions-item :label="item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,200)+'...'"></el-descriptions-item>
                 </el-descriptions>
