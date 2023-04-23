@@ -245,7 +245,7 @@
     }else if(flag === "question"){
       // console.log("有人发布问题了");
       let title = res.data.message.title
-      let name = res.data.userId.name
+      let name = res.data.userName
       addMessageItem(name,title)
     }
   }
@@ -421,39 +421,6 @@
                 </div>
               </div>
             </div>
-<!--     
-            <div class="discussion-content-right">
-              <div class="discussion-content-right-username">小花</div>
-              <div class="discussion-content-right-content">
-                <div v-if="false">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
-                <div v-else>
-                  <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
-                </div>
-              </div>
-            </div>
-            <div class="discussion-content-right">
-              <div class="discussion-content-right-username">小花</div>
-              <div class="discussion-content-right-content">
-                <div v-if="false">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
-                <div v-else>
-                  <img src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
-                </div>
-              </div>
-            </div>
-            <div class="discussion-content-left">
-              <div class="discussion-content-left-username">小草</div>
-              <div class="discussion-content-left-content">
-                <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
-                <img v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
-              </div>
-            </div>
-            <div class="discussion-content-right" @click="goPage('id')">
-              <div class="discussion-content-right-username">小叶</div>
-              <div class="discussion-content-right-content">
-                <div v-if="true">我想问一下这分割函数都会给速度还是是任何上是如果是是如何二人输入和是问题怎么解决啊,我快要哭了</div>
-                <img v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" alt="" srcset="">
-              </div>
-            </div> -->
 
           </div>
             

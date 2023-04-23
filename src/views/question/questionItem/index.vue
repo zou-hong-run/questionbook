@@ -6,13 +6,13 @@
     .questionItem-title{
       padding: 10px;
       width: calc(100% - 20px);
-      height: calc(60% - 20px);
+      height: calc(50% - 20px);
       border: 1px solid #fff;
       background-color: #F4F7FE;
     }
     .questionItem-content{
       width: calc(100% - 20px);
-      height: calc(40% - 70px);
+      height: calc(50% - 70px);
       padding: 10px;
       background: #ffffff;
       &-itemcontent{
@@ -83,7 +83,7 @@
 </style>
 
 <script setup>
-import {ref,reactive,onMounted,onUnmounted} from 'vue'
+import {ref,reactive,onMounted,onUnmounted,nextTick} from 'vue'
 import {useRoute,useRouter} from 'vue-router'
 import {collectQuestion,likeQuestion, getQuestionById,addQuestionComment,getQuestionCommentList} from "../../../api/question"
 import { ElMessageBox,ElNotification } from 'element-plus'
@@ -131,14 +131,16 @@ const addMessage = (isMy,message,name)=>{
       // 向消息容器中插入元素
       questionItemContentElement.appendChild(contentItemLeftElement)
     }else{
-      const contentItemRightElement = contentItemRightRef.value.cloneNode(true)
-      // 右边 用户,内容
-      const rightNameElement = contentItemRightElement.querySelector(".questionItem-content-right-username")
-      const rightContentElement = contentItemRightElement.querySelector(".questionItem-content-right-content")
-      rightNameElement.innerHTML = name
-      rightContentElement.innerHTML = message
-      // 向消息容器中插入元素
-      questionItemContentElement.appendChild(contentItemRightElement)
+      if(contentItemRightRef.value){
+        const contentItemRightElement = contentItemRightRef.value.cloneNode(true)
+        // 右边 用户,内容
+        const rightNameElement = contentItemRightElement.querySelector(".questionItem-content-right-username")
+        const rightContentElement = contentItemRightElement.querySelector(".questionItem-content-right-content")
+        rightNameElement.innerHTML = name
+        rightContentElement.innerHTML = message
+        // 向消息容器中插入元素
+        questionItemContentElement.appendChild(contentItemRightElement)
+      }
     }
     // 滚动条 到底部
     scrollbarRef.value?.setScrollTop(questionItemContentRef.value.scrollHeight)
@@ -175,7 +177,16 @@ let data = {
 // 回调函数接受返回的数据
 const getSocketData = (res)=>{
   console.log("message",res.data);
-  const flag = res.data.flag
+  if(res.data){
+    const flag = res.data.flag
+    if(flag==='questionHomeMessage'){
+      let name = res.data.userName
+      let message = res.data.message
+      nextTick(()=>{
+        addMessage(false,message,name)
+      })
+    }
+  }
   
 }
 
@@ -254,18 +265,19 @@ ws.onsend(data,getSocketData)
       addQuestionComment(message,questionId).then(list=>{
         // 添加评论成功
         console.log(list.data,"添加评论成功");
-      })
-      let data = {
-        data:{
-          "userId": userId,
-          "toUserId":null,
-          "message":message,
-          "flag":"questionHomeMessage",
-          "questionId":questionId
+        
+        let data = {
+          data:{
+            "userName":userStore.name,
+            "userId":userId,
+            "toUserId":null,
+            "message":message,
+            "flag":"questionHomeMessage",
+            "questionId":questionId
+          }
         }
-      }
-      ws.onsend(data,getSocketData)
-
+        ws.onsend(data,null)
+      })
 
     }else{
       const contentItemRightElement = contentItemRightRef.value.cloneNode(true)
@@ -283,7 +295,6 @@ ws.onsend(data,getSocketData)
     inputVal.value = ''
     
   }
-
 onUnmounted(()=>{
   let data = {
     data:{

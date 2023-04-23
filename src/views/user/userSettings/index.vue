@@ -131,7 +131,7 @@ const sumbitNewMessage = ()=>{
       message:"修改用户信息成功!!!",
       duration:2500
     })
-    window.location.href = "/#/usersettings"
+    window.location.reload();
   })
 
 }

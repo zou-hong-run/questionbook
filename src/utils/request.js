@@ -88,11 +88,11 @@ service.interceptors.response.use(res=>{
       }).then(()=>{
         isRelogin.show = false;
         userStore.LogOut().then(()=>{
-          Location.href = '/index'
+          Location.href = '/'
         })
       }).catch(()=>{
         userStore.LogOut().then(()=>{
-          Location.href = '/index'
+          Location.href = '/'
         })
         isRelogin.show = false
       })

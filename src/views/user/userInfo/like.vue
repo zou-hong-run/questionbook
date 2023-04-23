@@ -86,8 +86,8 @@ const goPage = (url)=>{
 const questions = ref()
 const texts = ref()
 myLike().then(list=>{
-  questions.value = list.data.questions
-  texts.value = list.data.texts
+  questions.value = list.data?.questions
+  texts.value = list.data?.texts
 })
 
 </script>

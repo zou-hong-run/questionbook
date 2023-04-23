@@ -87,7 +87,7 @@ const questions = ref()
 const texts = ref()
 myCollect().then(list=>{
   // console.log(list.data);
-  questions.value = list.data.questions
+  questions.value = list.data?.questions
   texts.value = list.data.texts
 })
 

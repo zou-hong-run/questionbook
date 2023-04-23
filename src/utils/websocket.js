@@ -49,6 +49,8 @@ initWebsocket.prototype.onsend = function(data,func){
   }
   if (func) {
     globalCallback.push(func)
+    // console.log(globalCallback);
+
   }
 }
 

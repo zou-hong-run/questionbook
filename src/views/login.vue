@@ -89,15 +89,15 @@ let registerLoading = ref(false)
 
 // 登录数据
 let loginFormItem = reactive({
-  username:"admin",
-  password:"admin",
+  username:"",
+  password:"",
   code:""
 })
 // 注册数据
 let registerFormItem = reactive({
-  username:"zouhongrun",
-  password:"zouhongrun",
-  rePassword:"zouhongrun",
+  username:"",
+  password:"",
+  rePassword:"",
   // 协议
   type:true
 })

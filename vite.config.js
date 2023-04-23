@@ -27,6 +27,7 @@ export default defineConfig({
     proxy: {
       '/dev-api': {
         target: 'http://43.143.237.123:6060',
+        // target: 'http://10.10.62.63:6060',
         changeOrigin: true,
         rewrite: (p) => {
           // console.log(p.replace(/^\/dev-api/, ''),"====");
