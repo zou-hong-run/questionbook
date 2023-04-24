@@ -1,0 +1,1 @@
+import{u as o,a as u}from"./index-b3d9fae9.js";const m={__name:"index",setup(n){const t=o(),e=u(),{params:r,query:s}=t,{path:a}=r;return e.replace({path:"/"+a,query:s}),(c,p)=>null}};export{m as default};

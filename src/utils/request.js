@@ -9,7 +9,9 @@ import errorCode from "./errorCode"
 import useUserStore from '../store/user';
 let downloadLoadingInstance;
 
-const BASE_URL = "/dev-api"
+// const BASE_URL = "/dev-api"
+// 开发上线
+const BASE_URL = "/"
 
 // 是否重新登录
 export let isRelogin = {show:false};
