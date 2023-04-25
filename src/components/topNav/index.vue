@@ -26,7 +26,7 @@
     </div>
     <!-- 提问 文章 信息  -->
     <div class="addMsgLink">
-      <router-link class="msgLink" v-for="(item, index) in addMsgItems" :key="index" :to="item.href">
+      <el-link class="msgLink" v-for="(item, index) in addMsgItems" :key="index" @click="toPage(item.href)">
         <template #default>
           {{item.name}}
         </template>
@@ -34,7 +34,7 @@
           <!-- <el-icon :src="item.icon"></el-icon> -->
           <el-image style="width: 25px; height: 25px;" :src="item.icon" />
         </template>
-      </router-link>
+      </el-link>
       
     </div>
     <!-- 用户头像 -->
@@ -96,6 +96,9 @@
       label:"游戏",name:"game"
     }
   ])
+  const toPage = (url)=>{
+    router.push(url)
+  }
   const addMsgItems = reactive([
     {
       name:"提问",href:"/question/addQuestion",icon:addQuestionPic

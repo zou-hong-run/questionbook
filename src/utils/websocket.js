@@ -5,7 +5,7 @@ const userStore = useUserStore()
 // const ws = new WebSocket("ws://10.10.62.63:6060/websocket",[token]);
 let globalCallback = [];
 function initWebsocket(){
-  this.url = "ws://43.143.237.123:6060/websocket"
+  this.url = "ws://43.138.10.99:6060/websocket"
   // this.url = "ws://10.10.62.63:6060/websocket"
   this.token = encodeURIComponent(userStore.token)
   this.websocket = new WebSocket(this.url,[this.token]);

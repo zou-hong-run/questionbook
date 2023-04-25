@@ -11,7 +11,8 @@ let downloadLoadingInstance;
 
 // const BASE_URL = "/dev-api"
 // 开发上线
-const BASE_URL = "http://43.143.237.123:6060"
+// const BASE_URL = "http://43.143.237.123:6060"
+const BASE_URL = "http://43.138.10.99:6060"
 
 // 是否重新登录
 export let isRelogin = {show:false};

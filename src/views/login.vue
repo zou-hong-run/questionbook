@@ -277,7 +277,7 @@ getCode()
       </el-form-item>
       <!-- 密码 -->
       <el-form-item class="formItem" prop="password">
-        <el-input clearable  v-model="loginFormItem.password" placeholder="请输入密码">
+        <el-input clearable type="password" show-password  v-model="loginFormItem.password" placeholder="请输入密码" >
           <template #prepend>
             <el-button icon="Lock" />
           </template>

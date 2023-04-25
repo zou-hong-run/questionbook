@@ -1,1 +1,0 @@
-import{B as e}from"./index-9ee4bf01.js";function r(a){return e({url:"/images/uploadCos",method:"post",headers:{"Content-Type":"multipart/form-data"},data:{image:a}})}function t(a){return console.log(a),e({url:"/search",method:"get",params:{title:a}})}export{t as s,r as u};
