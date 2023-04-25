@@ -26,7 +26,7 @@
     </div>
     <!-- 提问 文章 信息  -->
     <div class="addMsgLink">
-      <el-link class="msgLink" v-for="(item, index) in addMsgItems" :key="index" :href="item.href">
+      <router-link class="msgLink" v-for="(item, index) in addMsgItems" :key="index" :to="item.href">
         <template #default>
           {{item.name}}
         </template>
@@ -34,7 +34,7 @@
           <!-- <el-icon :src="item.icon"></el-icon> -->
           <el-image style="width: 25px; height: 25px;" :src="item.icon" />
         </template>
-      </el-link>
+      </router-link>
       
     </div>
     <!-- 用户头像 -->
@@ -98,13 +98,13 @@
   ])
   const addMsgItems = reactive([
     {
-      name:"提问",href:"/#/question/addQuestion",icon:addQuestionPic
+      name:"提问",href:"/question/addQuestion",icon:addQuestionPic
     },
     {
-      name:"文章",href:"/#/essay/addEssay",icon:addEssayPic
+      name:"文章",href:"/essay/addEssay",icon:addEssayPic
     },
     {
-      name:"消息",href:"/#/messages",icon:addMsgPic
+      name:"消息",href:"/messages",icon:addMsgPic
     },
   ])
   const toUrl = computed(()=>{

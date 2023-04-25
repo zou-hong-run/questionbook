@@ -29,7 +29,9 @@ import tiaoyitiao from "@/assets/game/跳一跳.png"
 import bgm from "@/assets/game/bg.mp3"
 let mp3 = new Audio(bgm)
 onMounted(()=>{
-  mp3.play()
+  document.querySelector(".game").addEventListener("click",()=>{
+    mp3.play()
+  })
 })
 onUnmounted(() => {
   mp3.pause()
