@@ -357,7 +357,7 @@
                   
                   <div class="hot-question-bottom">
                     <el-tag>{{item.solved===0?"未解决":"已解决"}}</el-tag>
-                    <el-tag type="info">{{Math.floor(Math.random()*99)}}+人在线讨论</el-tag>
+                    <el-tag type="info">{{Math.floor(Math.random()*20)}}+人在线讨论</el-tag>
                     <el-image style="width: 20px; height: 20px" :src="embers" />
                   </div>
                 </div>

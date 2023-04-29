@@ -21,7 +21,7 @@
                   <div class="hot-question-content-bottom-title">{{item.title}}</div>
                   <div class="hot-question-content-bottom-discuss">
                     <el-tag>{{item.solved===0?"未解决":"已解决"}}</el-tag>
-                    <div style="margin:0 20px;"><el-tag type="info">{{999}}+人在线讨论</el-tag></div>
+                    <div style="margin:0 20px;"><el-tag type="info">{{Math.floor(Math.random()*20)}}+人在线讨论</el-tag></div>
                     <el-image style="width: 20px; height: 20px" :src="embers" />
                   </div>
                 </div>
