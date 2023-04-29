@@ -17,7 +17,7 @@
                 <el-descriptions style="margin:20px;user-select:all;" :title="item?.title">
                   <el-descriptions-item>
                     <template #default>
-                      <div>{{item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'}}</div>
+                      <div>{{parseStr(item?.data)+'...'}}</div>
                     </template>
                   </el-descriptions-item>
                 </el-descriptions>
@@ -50,7 +50,7 @@
                 <el-descriptions style="margin:20px;user-select:all;" :title="item?.title">
                   <el-descriptions-item>
                     <template #default>
-                      <div>{{item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,120)+'...'}}</div>
+                      <div>{{parseStr(item?.data)+'...'}}</div>
                     </template>
                   </el-descriptions-item>
                 </el-descriptions>
@@ -79,6 +79,7 @@
 import {ref} from "vue"
 import {myCollect} from "../../../api/user"
 import {useRoute,useRouter} from "vue-router"
+import {parseStr} from '@/utils/qb'
 const router = useRouter()
 const goPage = (url)=>{
   router.push(url)

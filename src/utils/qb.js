@@ -27,3 +27,7 @@ export function transParams(params){
   return result;
 
 }
+
+export function parseStr(str){
+  return str.match(/[\u4e00-\u9fa5[.，、。]]{0,}/g).join("").slice(10,120)
+}

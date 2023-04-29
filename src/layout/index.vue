@@ -6,7 +6,7 @@
     </div>
     <div class="footer">
       <el-text type="primary">
-        2022 @ zhr.com 版权所有 增值电信业务经营许可证：XXXXX XXXXX 公网安备 XXXXXXXXXXX号
+        2023 @ xxxx 版权所有 增值电信业务经营许可证：XXXXX XXXXX 公网安备 XXXXXXXXXXX号
       </el-text>
     </div>
   </div>

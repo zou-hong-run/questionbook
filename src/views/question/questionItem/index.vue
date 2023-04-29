@@ -189,6 +189,10 @@ const getSocketData = (res)=>{
   }
   
 }
+// 跳转到视频通话页面
+const goVideo = ()=>{
+  window.open("https://43.138.10.99")
+}
 
 // 发送连接请求
 ws.onsend(data,getSocketData)
@@ -346,6 +350,7 @@ onUnmounted(()=>{
     <el-scrollbar style="width: 100%;height:50px;">
       <div class="questionItem-bottom">
         <el-button ><el-icon><CirclePlus /></el-icon></el-button>
+        <el-button @click="goVideo"><el-icon><Service /></el-icon>音视频通话</el-button>
         <el-input
           v-model="inputVal"
           @change="sendMessage(true)"

@@ -4,13 +4,13 @@
 import {ref} from 'vue';
 // import { storeToRefs } from 'pinia'
 import {likeMe,collectMe,commentMe} from "../../api/message"
-
+import {parseStr} from '@/utils/qb'
 import useUserStore from '../../store/user';
 const userStore = useUserStore()
 const name = userStore.name
 const image = userStore.image
 const phone = userStore.phone
-const circleUrl = ref("https://img1.baidu.com/it/u=2101536329,949644418&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=625")
+const imgUrl = userStore.image
 
 const likeMeList = ref()
 const collectMeList = ref()
@@ -46,7 +46,7 @@ function tableClick(data){
 <template>
   <div class="messages">
     <div class="messages-left">
-      <el-avatar :size="80" :src="circleUrl" />
+      <el-avatar :size="80" :src="imgUrl?imgUrl:'https://img1.baidu.com/it/u=2101536329,949644418&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=625'" />
       <h1>{{name}}</h1>
       <p>{{phone}}</p>
       <el-link type="success" href="#/userinfo/questions">个人主页</el-link>

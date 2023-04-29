@@ -214,6 +214,7 @@
   import useEssayStore from "../store/essay"
   import {useRoute,useRouter} from "vue-router"
   import connectSocket from "../utils/websocket"
+  import {parseStr} from '../utils/qb'
   const userStore = useUserStore()
   const route = useRoute()
   const router = useRouter()
@@ -243,10 +244,13 @@
         duration:2500
       })
     }else if(flag === "question"){
+      // console.log(res.data);
       // console.log("有人发布问题了");
       let title = res.data.message.title
-      let name = res.data.userName
-      addMessageItem(name,title)
+      let name = res.data.userId.name
+      if(discussionItemContentRef.value&&discussionItemRightRef.value){
+        addMessageItem(name,title)
+      }
     }
   }
   // 发送连接请求
@@ -375,7 +379,7 @@
             <router-link style="" v-for="(item, index) in essayList" :key="item.id" :to="`/essay/essayItem/${item.id}`">
               <el-row style="border:5px solid #F5F6F8;">
                 <el-descriptions style="margin:20px;" :title="item.title">
-                  <el-descriptions-item :label="item?.data.match(/[\u4e00-\u9fa5]/g).toString().replace('，',' ').slice(20,200)+'...'"></el-descriptions-item>
+                  <el-descriptions-item :label="parseStr(item.data)+'...'"></el-descriptions-item>
                 </el-descriptions>
                 <!-- 三连 -->
                 <div class="hot-essay-likecollectandforward">
