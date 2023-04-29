@@ -1,0 +1,55 @@
+<svg id="组件" xmlns="http://www.w3.org/2000/svg" width="1024" height="550" viewBox="0 0 1024 550">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-size: 40.005px;
+        font-family: "Adobe Heiti Std";
+      }
+
+      .cls-2, .cls-3 {
+        fill: #000056;
+      }
+
+      .cls-3 {
+        font-size: 133.35px;
+        font-family: STXingkai;
+      }
+
+      .cls-4 {
+        fill: #4c69e4;
+      }
+
+      .cls-4, .cls-6, .cls-7 {
+        fill-opacity: 0.8;
+      }
+
+      .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill-rule: evenodd;
+      }
+
+      .cls-5 {
+        fill: #e058eb;
+        fill-opacity: 0.85;
+      }
+
+      .cls-6 {
+        fill: #06bbf1;
+      }
+
+      .cls-7 {
+        fill: #00e2ee;
+      }
+    </style>
+  </defs>
+  <rect id="圆角矩形_1" data-name="圆角矩形 1" class="cls-1" y="-237" width="1024" height="1024" rx="50" ry="50"/>
+  <text id="起_笔_欲_问_书_怎_修_心_无_束" data-name="起   笔  欲   问  书   ，  怎   修  心   无  束" class="cls-2" transform="translate(105.125 525.467) scale(1.451 1.449)">起   笔  欲   问  书   ，  怎   修  心   无  束</text>
+  <text id="问书" class="cls-3" transform="translate(485.604 333.54) scale(2.23 2.227)">问书</text>
+  <path id="中2" class="cls-4" d="M216.412,78.885l87.373,246.06,95.159-44.032-51.9-144.182Z"/>
+  <path id="右1" class="cls-5" d="M302.055,324.945l103.431-164.9s26.085,6.751,44.071,22.405c40.366,46.165-4.5,79.763-4.5,79.763Z"/>
+  <path id="中1" class="cls-6" d="M7.928,408.692l200.7-334.987L348.77,137.594,198.246,377.61,65.023,439.773c-11.918,5.15-47.127.916-57.1-31.081"/>
+  <path id="左1" class="cls-7" d="M164.507,52.984l-1.73,341.894-97.754,44.9c-15.8,5.487-37.821-2.667-49.31-17.268C7.416,411.922,4,398.386,4.468,398.331L3.6,321.491S3.617,64.369,4.468,48.667s13.162-25.8,15.571-28.491,15.572-9.5,15.572-9.5S46.05,6.848,49.452,6.848H64.158Z"/>
+</svg>
