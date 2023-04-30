@@ -93,7 +93,7 @@
       label:"文章",name:"essay"
     },
     {
-      label:"游戏",name:"game"
+      label:"娱乐",name:"game"
     }
   ])
   const toPage = (url)=>{

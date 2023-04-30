@@ -108,10 +108,13 @@
         router.back()
       })
   })
-  getEssayCommentList(essayDataId).then(list=>{
-    contentData.value = list.data
-    
-  })
+  // 获取用户评论
+  const initEssayCommentList = ()=>{
+    getEssayCommentList(essayDataId).then(list=>{
+      contentData.value = list.data
+    })
+  }
+  initEssayCommentList()
 
 
   // 给用户提示
@@ -155,6 +158,7 @@
   const addCommment = ()=>{
     addEssayComment(inputCommentVal.value,essayDataId).then(res=>{
       console.log(res);
+      initEssayCommentList()
     })
     
     showNotification("评论")

@@ -72,12 +72,12 @@ function tableClick(data){
         <el-tab-pane label="点赞">
           <el-scrollbar height="70vh">
             <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in likeMeList" :key="item.id">
-              <el-avatar style="width:250px;margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
+              <img style="width:200px;margin:0px 20px;border-radius:15px;" :src="item.user.image?image:circleUrl" />
               <el-descriptions :column="1">
                 <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
                 <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
                 <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
-                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
+                <el-descriptions-item label="点赞了:">{{item.question?parseStr(item.question.data):parseStr(item.text.data)}}</el-descriptions-item>
               </el-descriptions>
             </el-link>
           </el-scrollbar>
@@ -86,12 +86,12 @@ function tableClick(data){
         <el-tab-pane label="收藏">
           <el-scrollbar height="70vh">
             <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in collectMeList" :key="item.id">
-              <el-avatar style="width:250px;margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
+              <img style="width:200px;margin:0px 20px;border-radius:15px;" :src="item.user.image?image:circleUrl" />
               <el-descriptions :column="1">
                 <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
                 <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
                 <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
-                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
+                <el-descriptions-item label="收藏了:">{{item.question?parseStr(item.question.data):parseStr(item.text.data)}}</el-descriptions-item>
               </el-descriptions>
             </el-link>
           </el-scrollbar>
@@ -100,12 +100,12 @@ function tableClick(data){
         <el-tab-pane label="评论">
           <el-scrollbar height="70vh">
             <el-link :href="item.questionId?'/#/question/questionItem/'+item.question.id:'/#/essay/essayItem/'+item.text.id" class="messages-right-item" v-for="(item, index) in commentMeList" :key="item.id">
-              <el-avatar style="width:250px;margin-right:20px;" :size="80" :src="item.user.image?image:circleUrl" />
+              <img style="width:200px;margin:0px 20px;border-radius:15px;" :src="item.user.image?image:circleUrl" />
               <el-descriptions :column="1">
                 <el-descriptions-item label="用户名:">{{item.user.name}}</el-descriptions-item>
                 <el-descriptions-item label="时间:">{{item.createTime}}</el-descriptions-item>
                 <el-descriptions-item :label="item.question?'问题标题':'文章标题'">{{item.question?item.question.title:item.text.title}}</el-descriptions-item>
-                <el-descriptions-item label="评论了:">{{item.question?item.question.data:item.text.data}}</el-descriptions-item>
+                <el-descriptions-item label="评论了:">{{item.question?parseStr(item.question.data):parseStr(item.text.data)}}</el-descriptions-item>
               </el-descriptions>
             </el-link>
           </el-scrollbar>
